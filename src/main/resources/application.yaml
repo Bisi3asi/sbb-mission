@@ -3,6 +3,15 @@ server:
 spring:
   thymeleaf:
     cache: false
+  # JPA
+  jpa:
+    hibernate:
+      ddl-auto: create-drop #??, ?? ? drop, ?? update ??
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  # DATABASE
   h2:
     console:
       enabled: true
@@ -12,3 +21,5 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password:
+
+
