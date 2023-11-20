@@ -18,7 +18,7 @@ class SbbMissionApplicationTests {
     void 글_추가() {
         // case 1
         Article a1 = Article.builder()
-                .subject("글 1")
+                .title("글 1")
                 .content("내용 1")
                 .createDateTime(LocalDateTime.MAX)
                 .modifiedDateTime(LocalDateTime.MAX)
@@ -26,7 +26,7 @@ class SbbMissionApplicationTests {
 
         // case 2
         Article a2 = Article.builder()
-                .subject("글 2")
+                .title("글 2")
                 .content("내용 2")
                 .createDateTime(LocalDateTime.MAX)
                 .modifiedDateTime(LocalDateTime.MAX)
@@ -34,7 +34,7 @@ class SbbMissionApplicationTests {
 
         // case 3
         Article a3 = Article.builder()
-                .subject("글 3")
+                .title("글 3")
                 .content("내용 3")
                 .createDateTime(LocalDateTime.MAX)
                 .modifiedDateTime(LocalDateTime.MAX)
