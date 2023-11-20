@@ -1,24 +1,23 @@
 package com.mysite.sbbmission;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Article {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @Column(columnDefinition = "VARCHAR(50)", length = 50)
-    private String subject;
 
     @Column(columnDefinition = "TEXT", length = 500)
     private String content;
@@ -29,6 +28,6 @@ public class Article {
     @LastModifiedDate
     private LocalDateTime modifiedDateTime;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-    private List<Comment> commentList;
+    @ManyToOne
+    private Article article;
 }
