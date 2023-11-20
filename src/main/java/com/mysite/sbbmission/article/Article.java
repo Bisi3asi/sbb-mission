@@ -20,7 +20,7 @@ public class Article {
     private long id;
 
     @Column(columnDefinition = "VARCHAR(50)", length = 50)
-    private String subject;
+    private String title;
 
     @Column(columnDefinition = "TEXT", length = 500)
     private String content;
