@@ -29,6 +29,6 @@ public class Article {
     @LastModifiedDate
     private LocalDateTime modifiedDateTime;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
 }
