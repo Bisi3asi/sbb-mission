@@ -12,10 +12,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/article")
 public class ArticleController {
-    private final ArticleRepository articleRepository;
+    private final ArticleService articleService;
     @GetMapping("/list")
     public String showList(Model model){
-        List<Article> articleList = this.articleRepository.findAll();
+        List<Article> articleList = articleService.getList();
         model.addAttribute("articleList", articleList);
         return "article_list";
     }
