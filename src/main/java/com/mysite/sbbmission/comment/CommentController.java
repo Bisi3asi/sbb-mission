@@ -17,8 +17,8 @@ public class CommentController {
     private final CommentService commentService;
     private final ArticleService articleService;
 
-    @PostMapping("/create/{id}")
-    public String post(Model model, @PathVariable("id") Long id, @RequestParam String content){
+    @PostMapping("/write/{id}")
+    public String write(Model model, @PathVariable("id") Long id, @RequestParam String content){
         Article article = articleService.getArticle(id);
         commentService.create(article, content);
         model.addAttribute("article", article);
