@@ -1,0 +1,33 @@
+<html layout:decorate="~{global/layout}">
+<div class="mx-4" layout:fragment="content">
+    <h5 class="my-3 border-b pb-2">게시물 작성</h5>
+    <form th:action="@{/article/write}" method="post">
+        <div class="form-control mx-auto">
+            <label class="label">
+                <span class="label-text">글 제목</span>
+                <span class="label-text-alt">50자 미만</span>
+            </label>
+            <input type="text" placeholder="글 제목을 작성해주세요."
+                    name ="title" id="title" class="form-input w-full p-4"/>
+            <label class="label">
+                <span class="label-text-alt"></span>
+                <span class="label-text-alt">50자 미만으로 작성해주세요!</span>
+            </label>
+        </div>
+        <div class="form-control mx-auto">
+            <label class="label">
+                <span class="label-text">글 내용</span>
+                <span class="label-text-alt color:red">500자 미만</span>
+            </label>
+            <!-- textarea를 사용하여 세로로 늘리기 -->
+            <textarea placeholder="글 내용을 작성해주세요. (마크다운 문법 지원)"
+                      name ="content" id="content" class="form-input w-full h-80 p-4"></textarea>
+            <label class="label">
+                <span class="label-text-alt"></span>
+                <span class="label-text-alt">500자 미만으로 작성해주세요!</span>
+            </label>
+        </div>
+        <input type="submit" value="등록하기" class="btn btn-primary my-2">
+    </form>
+</div>
+</html>
