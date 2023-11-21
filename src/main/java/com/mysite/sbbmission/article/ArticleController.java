@@ -30,20 +30,19 @@ public class ArticleController {
     }
 
     @GetMapping("/write")
-    public String showWriteForm(){
+    public String showWriteForm(Model model) {
+        model.addAttribute("articleForm", new ArticleForm());
         return "article/article_form";
-
     }
 
     @PostMapping("/write")
-    public String write(@Valid ArticleForm articleForm, BindingResult rs){
+    public String write(@ModelAttribute("articleForm") @Valid ArticleForm articleForm, BindingResult brs){
         // Valid : ArticleForm(NotEmpty 등 작동), BindingResult(검증 작동)
         // BindingResult : 폼 객체를 도메인에 바인딩, 오류를 로깅해 저장
         // RequestParam : 매개변수와 폼을 바인딩, Spring은 요청 파라미터와 필드 이름 동일 시 @RequestParam 생략 가능
-        if (rs.hasErrors()){
+        if (brs.hasErrors()){
             return "article/article_form";
         }
-
         articleService.create(articleForm.getTitle(), articleForm.getContent());
         return "redirect:/article/list";
     }
