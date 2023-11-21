@@ -22,6 +22,6 @@ public class CommentController {
         Article article = articleService.getArticle(id);
         commentService.create(article, content);
         model.addAttribute("article", article);
-        return String.format("redirect:/comment/detail/%s", id);
+        return String.format("redirect:/article/detail/%s", id);
     }
 }
