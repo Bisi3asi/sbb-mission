@@ -22,16 +22,27 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    // spring boot web
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    // devtools
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    // actuator
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    // thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+    // jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // lombok
     testImplementation 'org.projectlombok:lombok:1.18.28'
     compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // h2 db
     runtimeOnly 'com.h2database:h2'
+    // test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 tasks.named('bootBuildImage') {
