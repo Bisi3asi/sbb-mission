@@ -1,0 +1,22 @@
+<html layout:decorate="~{global/layout}">
+<div layout:fragment="content">
+    <table>
+        <thead>
+        <tr>
+            <th>제목</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="article : ${articleList}">
+            <td>
+                <a th:href="@{|/article/detail/${article.id}|}"
+                   th:text="${article.title}">
+                </a>
+            </td>
+            <td th:text="${article.createDateTime}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</html>
