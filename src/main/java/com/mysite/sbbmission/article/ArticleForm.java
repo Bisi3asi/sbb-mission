@@ -3,11 +3,9 @@ package com.mysite.sbbmission.article;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 @AllArgsConstructor
-@Builder
 @Getter
 public class ArticleForm {
     @NotBlank(message="제목은 필수항목입니다.")
