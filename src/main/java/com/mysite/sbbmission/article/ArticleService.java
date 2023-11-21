@@ -4,6 +4,7 @@ import com.mysite.sbbmission.global.exceptions.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,5 +26,14 @@ public class ArticleService {
         else {
             throw new DataNotFoundException("존재하지 않는 게시물입니다");
         }
+    }
+
+    public void create(String title, String content){
+        Article article = Article.builder()
+                .title(title)
+                .content(content)
+                .createDateTime(LocalDateTime.now())
+                .build();
+        articleRepository.save(article);
     }
 }
