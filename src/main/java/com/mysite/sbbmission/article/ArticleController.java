@@ -3,9 +3,7 @@ package com.mysite.sbbmission.article;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +24,14 @@ public class ArticleController {
         Article article = articleService.getArticle(id);
         model.addAttribute("article", article);
         return "article/article_detail";
+    }
+
+    @GetMapping("/write")
+    public String showWriteForm(){
+        return "article/article_form";
+    }
+    @PostMapping("/write")
+    public String write(@RequestParam String title, @RequestParam String content){
+        return "redirect:/article/article_list";
     }
 }
