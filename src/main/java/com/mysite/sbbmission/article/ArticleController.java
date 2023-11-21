@@ -32,6 +32,7 @@ public class ArticleController {
     }
     @PostMapping("/write")
     public String write(@RequestParam String title, @RequestParam String content){
-        return "redirect:/article/article_list";
+        articleService.create(title, content);
+        return "redirect:/article/list";
     }
 }
