@@ -18,13 +18,13 @@ public class ArticleController {
     public String showList(Model model){
         List<Article> articleList = articleService.getList();
         model.addAttribute("articleList", articleList);
-        return "article_list";
+        return "article/article_list";
     }
 
     @GetMapping("/detail/{id}")
     public String showDetail(Model model, @PathVariable("id") Long id){
         Article article = articleService.getArticle(id);
         model.addAttribute("article", article);
-        return "article_detail";
+        return "article/article_detail";
     }
 }
