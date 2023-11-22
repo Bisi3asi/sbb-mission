@@ -20,11 +20,19 @@
         </ul>
     </div>
 
-    <form th:action="@{|/comment/write/${article.id}|}" method="post" class="mx-2">
+    <form th:action="@{|/comment/write/${article.id}|}" th:object="${commentForm}" method="post"
+          class="mx-2 flex-col">
         <div class="form-control mx-auto my-auto">
-            <textarea name="content" id="content" rows="5" class="form-input w-full"></textarea>
+            <textarea th:field="*{content}" rows="5" class="form-input w-full"></textarea>
         </div>
-        <input type="submit" value="댓글 작성" class="btn btn-primary my-2 ">
+        <label class="label">
+            <span class="label-text-alt"></span>
+            <span>&nbsp;</span>
+            <span th:if="${#fields.hasErrors('content')}"
+                  th:each="err:${#fields.errors('content')}"
+                  th:text="${err}" class="error-message text-red-500 text-sm"></span>
+        </label>
+        <input type="submit" value="댓글 작성" class="btn btn-primary my-2 ml-auto">
     </form>
 </div>
 </html>

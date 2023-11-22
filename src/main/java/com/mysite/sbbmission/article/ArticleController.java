@@ -1,5 +1,6 @@
 package com.mysite.sbbmission.article;
 
+import com.mysite.sbbmission.comment.CommentForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,7 @@ public class ArticleController {
     public String showDetail(Model model, @PathVariable("id") Long id){
         Article article = articleService.getArticle(id);
         model.addAttribute("article", article);
+        model.addAttribute("commentForm", new CommentForm());
         return "article/article_detail";
     }
 
