@@ -13,7 +13,7 @@ public class CommentService {
 
     public void create(Article article, String content) {
         Comment comment = Comment.builder()
-                .content(content)
+                .content(content.trim())
                 .createDateTime(LocalDateTime.now())
                 .article(article)
                 .build();

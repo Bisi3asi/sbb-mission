@@ -30,8 +30,8 @@ public class ArticleService {
 
     public void create(String title, String content){
         Article article = Article.builder()
-                .title(title)
-                .content(content)
+                .title(title.trim())
+                .content(content.trim())
                 .createDateTime(LocalDateTime.now())
                 .build();
         articleRepository.save(article);
