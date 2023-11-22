@@ -26,8 +26,9 @@
             <td th:text="${article.id}"></td>
             <td>
                 <a th:href="@{|/article/detail/${article.id}|}"
-                   th:text="${article.title}" class="hover:text-blue-500">
+                   th:text="${article.title}" class="hover:text-blue-500 mr-1">
                 </a>
+                <span th:text="${article.commentList.size()}" th:style="'color: skyblue;'"></span>
             </td>
             <td th:text="${#temporals.format(article.createDateTime, 'yyyy.MM.dd HH:mm')}"></td>
             <td><!-- 작성자 --></td>
