@@ -2,10 +2,12 @@ package com.mysite.sbbmission.article;
 
 import com.mysite.sbbmission.global.exceptions.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,8 +15,9 @@ import java.util.Optional;
 public class ArticleService {
     private final ArticleRepository articleRepository;
 
-    public List<Article> getList() {
-        return this.articleRepository.findAll();
+    public Page<Article> getList(int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return this.articleRepository.findAll(pageable);
     }
 
     public Article getArticle(Long id){
