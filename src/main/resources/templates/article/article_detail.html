@@ -1,18 +1,30 @@
 <html layout:decorate="~{global/layout}">
-<div layout:fragment="content">
-    <h1 th:text="${article.title}"></h1>
-    <div th:text="${article.content}"></div>
+<div layout:fragment="content" class="mx-4">
+    <h1 th:text="${article.title}" class="my-3 border-b border-indigo-500 pb-2"></h1>
+    <div th:text="${article.content}" class="my-3 pb-40 border-b border-indigo-500 pb-2"></div>
 
-    <h5 th:text="|${#lists.size(article.commentList)}개의 댓글|"></h5>
+    <div class="flex items-center">
+        <div class="mr-2">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512" class="text-white fill-current">
+                <path d="M512 240c0 114.9-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6C73.6 471.1 44.7 480 16 480c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4l0 0 0 0 0 0 0 0 .3-.3c.3-.3 .7-.7 1.3-1.4c1.1-1.2 2.8-3.1 4.9-5.7c4.1-5 9.6-12.4 15.2-21.6c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208z"/>
+            </svg>
+        </div>
+        <div>
+            <h5 th:text="|${#lists.size(article.commentList)}개의 댓글|"></h5>
+        </div>
+    </div>
     <div>
-        <ul>
-            <li th:each="comment : ${article.commentList}" th:text="${comment.content}"></li>
+        <ul class="bg-gray-700 mx-2 my-2 px-2">
+            <li th:each="comment : ${article.commentList}" th:text="${comment.content}"
+                class="py-2"></li>
         </ul>
     </div>
 
-    <form th:action="@{|/comment/write/${article.id}|}" method="post">
-        <textarea name="content" id="content" rows="15"></textarea>
-        <input type="submit" value="댓글 작성">
+    <form th:action="@{|/comment/write/${article.id}|}" method="post" class="mx-2">
+        <div class="form-control mx-auto my-auto">
+            <textarea name="content" id="content" rows="5" class="form-input w-full"></textarea>
+        </div>
+        <input type="submit" value="댓글 작성" class="btn btn-primary my-2 ">
     </form>
 </div>
 </html>
