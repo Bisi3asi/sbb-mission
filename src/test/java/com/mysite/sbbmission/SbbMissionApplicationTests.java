@@ -45,4 +45,17 @@ class SbbMissionApplicationTests {
         articleRepository.save(a2);
         articleRepository.save(a3);
     }
+    @Test
+    void 글_추가_페이징() {
+        // case
+        for (int i = 1; i < 100; i++){
+            Article article = Article.builder()
+                    .title("테스트 글 " +i)
+                    .content("테스트 내용 " +i)
+                    .createDateTime(LocalDateTime.now())
+                    .modifiedDateTime(LocalDateTime.now())
+                    .build();
+            articleRepository.save(article);
+        }
+    }
 }
