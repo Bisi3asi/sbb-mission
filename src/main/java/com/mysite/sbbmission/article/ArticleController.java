@@ -3,12 +3,11 @@ package com.mysite.sbbmission.article;
 import com.mysite.sbbmission.comment.CommentForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -17,9 +16,9 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping("/list")
-    public String showList(Model model){
-        List<Article> articleList = articleService.getList();
-        model.addAttribute("articleList", articleList);
+    public String showList(Model model, @RequestParam(value = "page", defaultValue = "0") int page){
+        Page<Article> paging = articleService.getList(page);
+        model.addAttribute("paging", paging);
         return "article/article_list";
     }
 
