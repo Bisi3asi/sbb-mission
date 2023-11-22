@@ -21,15 +21,16 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "VARCHAR(20)", length = 20, unique = true)
-    private String loginId;
+    @Column(columnDefinition = "VARCHAR(20)", length = MemberUtilConst.SIGNIN_ID.MAXLENGTH, unique = true)
+    private String signInId;
 
-    @Column(columnDefinition = "VARCHAR(10)", length = 10, unique = true)
+    @Column(columnDefinition = "VARCHAR(10)", length = MemberUtilConst.USERNAME.MAXLENGTH, unique = true)
     private String username;
 
+    @Column(columnDefinition = "VARCHAR(20)", length = MemberUtilConst.PASSWORD.MAXLENGTH)
     private String password;
 
-    @Column(columnDefinition = "VARCHAR(40)", length = 10, unique = true)
+    @Column(columnDefinition = "VARCHAR(40)", length = MemberUtilConst.EMAIL.MAXLENGTH, unique = true)
     private String email;
 
     @CreatedDate
