@@ -1,5 +1,6 @@
 <html layout:decorate="~{global/layout}">
-<div layout:fragment="content">
+<div layout:fragment="content" class="mx-4">
+    <h5 class="my-3 border-b pb-2">게시글 조회</h5>
     <table>
         <thead>
         <tr>
@@ -8,13 +9,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="article : ${articleList}">
+        <tr th:each="article : ${articleList}" class="hover:bg-gray-700">
             <td>
                 <a th:href="@{|/article/detail/${article.id}|}"
-                   th:text="${article.title}">
+                   th:text="${article.title}" class="hover:text-blue-500">
                 </a>
             </td>
-            <td th:text="${article.createDateTime}"></td>
+            <td th:text="${#temporals.format(article.createDateTime, 'yyyy.MM.dd HH:mm')}"></td>
         </tr>
         </tbody>
     </table>
