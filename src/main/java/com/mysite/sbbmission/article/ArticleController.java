@@ -18,6 +18,7 @@ public class ArticleController {
     @GetMapping("/list")
     public String showList(Model model, @RequestParam(value = "page", defaultValue = "0") int page){
         Page<Article> paging = articleService.getList(page);
+
         model.addAttribute("paging", paging);
         return "article/article_list";
     }
@@ -25,14 +26,14 @@ public class ArticleController {
     @GetMapping("/detail/{id}")
     public String showDetail(Model model, @PathVariable("id") Long id){
         Article article = articleService.getArticle(id);
+
         model.addAttribute("article", article);
         model.addAttribute("commentForm", new CommentForm());
         return "article/article_detail";
     }
 
     @GetMapping("/write")
-    public String showWriteForm(Model model) {
-        model.addAttribute("articleForm", new ArticleForm());
+    public String showWriteForm(ArticleForm articleForm) {
         return "article/article_form";
     }
 
