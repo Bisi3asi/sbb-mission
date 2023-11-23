@@ -1,0 +1,98 @@
+<html lang="ko" layout:decorate="~{global/layout}">
+<head>
+    <title>회원가입</title>
+</head>
+<body>
+<div layout:fragment="content" class="mx-4">
+    <h5 class="my-3 border-b pb-2">회원가입</h5>
+    <form th:action="@{/member/signup}" th:object="${memberSignUpForm}" method="post">
+        <div class="form-control mx-auto">
+            <label class="label">
+                <span class="label-text">사용자 ID</span>
+                <span class="label-text-alt">8 ~ 20자, 공백 및 특수문자 미포함</span>
+            </label>
+            <input type="text" th:field="*{signInId}" placeholder="8 ~ 20자, 공백 및 특수문자 미포함"
+                   class="form-input w-full p-4"/>
+            <label class="label">
+                <span class="label-text-alt"></span>
+                <span>&nbsp;</span>
+                <span th:if="${#fields.hasErrors('signInId')}"
+                      th:text="${#fields.errors('signInId')[0]}"
+                      class="error-message text-red-500 text-sm block">
+                </span>
+            </label>
+        </div>
+
+        <div class="form-control mx-auto">
+            <label class="label">
+
+                <span class="label-text">사용자 이름</span>
+                <span class="label-text-alt">2 ~ 10자, 공백 및 특수문자 미포함</span>
+            </label>
+            <input type="text" th:field="*{username}" placeholder="2 ~ 10자, 공백 및 특수문자 미포함"
+                   class="form-input w-full p-4"/>
+            <label class="label">
+                <span class="label-text-alt"></span>
+                <span>&nbsp;</span>
+                <span th:if="${#fields.hasErrors('username')}"
+                      th:text="${#fields.errors('username')[0]}"
+                      class="error-message text-red-500 text-sm block">
+                </span>
+            </label>
+        </div>
+        <div class="form-control mx-auto">
+            <label class="label">
+                <span class="label-text">사용자 비밀번호</span>
+                <span class="label-text-alt">8자 ~ 20자, 공백 및 특수문자 미포함</span>
+            </label>
+            <input type="text" th:field="*{password1}" placeholder="글 제목을 작성해주세요."
+                   class="form-input w-full p-4"/>
+            <label class="label">
+                <span class="label-text-alt"></span>
+                <span>&nbsp;</span>
+                <span th:if="${#fields.hasErrors('password1')}"
+                      th:text="${#fields.errors('password1')[0]}"
+                      class="error-message text-red-500 text-sm block">
+                </span>
+            </label>
+        </div>
+
+        <div class="form-control mx-auto">
+            <label class="label">
+                <span class="label-text">사용자 비밀번호 확인</span>
+                <span class="label-text-alt">영어, 숫자, 특수문자를 포함한 8자 ~ 20자 (공백 미포함)</span>
+            </label>
+            <input type="text" th:field="*{password2}" placeholder="영어, 숫자, 특수문자를 포함한 8자 ~ 20자 (공백 미포함)"
+                   class="form-input w-full p-4"/>
+            <label class="label">
+                <span class="label-text-alt"></span>
+                <span>&nbsp;</span>
+                <span th:if="${#fields.hasErrors('password2')}"
+                      th:text="${#fields.errors('password2')[0]}"
+                      class="error-message text-red-500 text-sm block">
+                </span>
+            </label>
+        </div>
+
+        <div class="form-control mx-auto">
+            <label class="label">
+                <span class="label-text">이메일</span>
+                <span class="label-text-alt">이메일 형식, 40자 이하</span>
+            </label>
+            <input type="text" th:field="*{email}" placeholder="이메일 형식, 40자 이하"
+                   class="form-input w-full p-4"/>
+            <label class="label">
+                <span class="label-text-alt"></span>
+                <span>&nbsp;</span>
+                <span th:if="${#fields.hasErrors('email')}"
+                      th:text="${#fields.errors('email')[0]}"
+                      class="error-message text-red-500 text-sm block">
+                </span>
+            </label>
+        </div>
+
+        <input type="submit" value="가입하기!" class="btn btn-primary my-2">
+    </form>
+</div>
+</body>
+</html>
