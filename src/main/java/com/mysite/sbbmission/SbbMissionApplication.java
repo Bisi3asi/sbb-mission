@@ -1,4 +1,4 @@
-package com.mysite.sbbmission.global;
+package com.mysite.sbbmission;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
