@@ -16,8 +16,8 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http
                 // 모든 경로에 대해 인증되지 않은 요청을 승인(개발용)
+        http
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
                 // h2-console csrf 검증 예외 처리
@@ -26,7 +26,12 @@ public class SecurityConfig {
                 // h2-console X-Frame Option 헤더값 방지
                 .headers(headers -> headers
                         .addHeaderWriter(new XFrameOptionsHeaderWriter(
-                            XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)));
+                            XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
+                // login
+                .formLogin((formLogin) -> formLogin
+                        .loginPage("/member/signIn")
+                        .defaultSuccessUrl("/"))
+                ;
         return http.build();
     }
 
