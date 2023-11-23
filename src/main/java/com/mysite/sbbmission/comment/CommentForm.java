@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 public class CommentForm {
     @NotBlank(message = "댓글 내용을 작성해주세요.")
-    @Size(max = 500, message = "댓글은 500자 미만으로 작성이 가능합니다.")
+    @Size(max = 300, message = "댓글은 300자 미만으로 작성이 가능합니다.")
     private String content;
 }

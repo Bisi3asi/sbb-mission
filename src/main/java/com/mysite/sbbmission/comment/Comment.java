@@ -20,7 +20,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(columnDefinition = "TEXT", length = 500)
+    @Column(columnDefinition = "TEXT", length = 300)
     private String content;
 
     @CreatedDate
