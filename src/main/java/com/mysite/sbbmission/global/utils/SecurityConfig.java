@@ -31,7 +31,7 @@ public class SecurityConfig {
                             XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
                 // login
                 .formLogin((formLogin) -> formLogin
-                        .loginPage("/member/signIn")
+                        .loginPage("/member/signin")
                         .defaultSuccessUrl("/"))
                 ;
         return http.build();

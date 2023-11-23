@@ -13,7 +13,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Member create(MemberSignUpForm memberSignUpForm) {
+    public void create(MemberSignUpForm memberSignUpForm) {
         StringBuilder exceptionBuilder = new StringBuilder();
         if (memberRepository.findBySignInId(memberSignUpForm.getSignInId()).isPresent())
             exceptionBuilder.append(MemberUtilConst.SIGNIN_ID.UNUNIQUE_MESSAGE);
@@ -34,6 +34,6 @@ public class MemberService {
                 .build();
 
         memberRepository.save(member);
-        return member;
+        // return member;
     }
 }
