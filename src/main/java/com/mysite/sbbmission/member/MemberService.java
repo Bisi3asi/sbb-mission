@@ -5,6 +5,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -28,6 +30,7 @@ public class MemberService {
                 .username(memberSignUpForm.getUsername())
                 .email(memberSignUpForm.getEmail())
                 .password(passwordEncoder.encode(memberSignUpForm.getPassword1()))
+                .createDateTime(LocalDateTime.now())
                 .build();
 
         memberRepository.save(member);
