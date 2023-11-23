@@ -4,61 +4,63 @@
 </head>
 <body>
 <div layout:fragment="content" class="mx-4">
-    <h5 class="my-3 border-b pb-2">게시글 조회</h5>
-    <table class="table overflow-x-auto">
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성일</th>
-            <td>작성자</td>
-            <td>
-                <div class="flex items=center">
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
-                             class="text-grey fill-current mr-1">
-                            <path d="M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2H464c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48H294.5c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3V320 272 247.1c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192H96c17.7 0 32 14.3 32 32V448c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32V224c0-17.7 14.3-32 32-32z"/>
-                        </svg>
+    <div>
+        <h5 class="my-3 border-b pb-2">게시글 조회</h5>
+        <table class="table overflow-x-auto mb-5">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성일</th>
+                <td>작성자</td>
+                <td>
+                    <div class="flex items-center">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
+                                 class="text-grey fill-current mr-1">
+                                <path d="M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2H464c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48H294.5c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3V320 272 247.1c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192H96c17.7 0 32 14.3 32 32V448c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32V224c0-17.7 14.3-32 32-32z"/>
+                            </svg>
+                        </div>
+                        <div>추천 수</div>
                     </div>
-                    <div>추천 수</div>
-                </div>
-            </td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="article : ${paging}" class="hover:bg-gray-700">
-            <td th:text="${article.id}"></td>
-            <td>
-                <a th:href="@{|/article/detail/${article.id}|}"
-                   th:text="${article.title}" class="hover:text-blue-500 mr-1">
-                </a>
-                <span th:text="${article.commentList.size()}" th:style="'color: skyblue;'"></span>
-            </td>
-            <td th:text="${#temporals.format(article.createDateTime, 'yyyy.MM.dd HH:mm')}"></td>
-            <td><!-- 작성자 --></td>
-            <td><!-- 추천수 --></td>
-        </tr>
-        </tbody>
-    </table>
-
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="article : ${paging}" class="hover:bg-gray-700">
+                <td th:text="${article.id}"></td>
+                <td>
+                    <a th:href="@{|/article/detail/${article.id}|}"
+                       th:text="${article.title}" class="hover:text-blue-500 mr-1">
+                    </a>
+                    <span th:text="${article.commentList.size()}" th:style="'color: skyblue;'"></span>
+                </td>
+                <td th:text="${#temporals.format(article.createDateTime, 'yyyy.MM.dd HH:mm')}"></td>
+                <td><!-- 작성자 --></td>
+                <td><!-- 추천수 --></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
     <!-- 페이징처리 시작 -->
-    <div class="join flex justify-center" th:unless="${paging.isEmpty()}">
-        <div class="join-item btn" th:classappend="${!paging.hasPrevious} ? 'disabled'">
-            <a th:href="@{|?page=${paging.number-1}|}" class="hover:text-blue-500">
-                <span>이전</span>
-            </a>
-        </div>
-        <button th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
-                th:if="${page >= paging.number-5 and page <= paging.number+5}"
-                th:classappend="${page == paging.number} ? 'active'"
-                class="join-item btn">
-            <a th:text="${page+1}" th:href="@{|?page=${page}|}" class="hover:text-blue-500"></a>
-        </button>
-        <button class="join-item btn" th:classappend="${!paging.hasNext} ? 'disabled'">
-            <a th:href="@{|?page=${paging.number+1}|}" class="hover:text-blue-500">
-                <span>다음</span>
-            </a>
-        </button>
+    <div class="mx-auto flex justify-center items-center" th:unless="${paging.isEmpty()}">
+        <a th:classappend="${!paging.hasPrevious} ? 'disabled'"
+           th:href="@{|?page=${paging.number-1}|}"
+           class="join-item btn hover:text-blue-500"
+           th:text="이전">
+        </a>
+        <a th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+           th:if="${page >= paging.number-2 and page <= paging.number+2}"
+           th:classappend="${page == paging.number} ? 'active'"
+           th:text="${page+1}"
+           th:href="@{|?page=${page}|}"
+           class="join-item btn hover:text-blue-500">
+        </a>
+        <a th:classappend="${!paging.hasNext} ? 'disabled'"
+           th:href="@{|?page=${paging.number+1}|}"
+           class="join-item btn hover:text-blue-500"
+           th:text="다음">
+        </a>
     </div>
     <!-- 페이징처리 끝 -->
     <div>
