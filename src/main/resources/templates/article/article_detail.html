@@ -27,7 +27,7 @@
     <form th:action="@{|/comment/write/${article.id}|}" th:object="${commentForm}" method="post"
           class="mx-2 flex-col">
         <div class="form-control mx-auto my-auto">
-            <textarea th:field="*{content}" rows="5" class="form-input w-full"></textarea>
+            <textarea maxlength = 300 th:field="*{content}" rows="5" class="form-input w-full px-2 py-2"></textarea>
         </div>
         <label class="label">
             <span class="label-text-alt"></span>
