@@ -51,5 +51,10 @@ public class MemberController {
         }
         return "redirect:/";
     }
+
+    @GetMapping("/signin")
+    public String signIn(){
+        return "member/signin_form.html";
+    }
 }
 
