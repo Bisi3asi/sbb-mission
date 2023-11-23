@@ -1,4 +1,8 @@
-<html layout:decorate="~{global/layout}">
+<html lang="ko" layout:decorate="~{global/layout}">
+<head>
+    <title th:text="${article.title}"></title>
+</head>
+<body>
 <div layout:fragment="content" class="mx-4">
     <h1 th:text="${article.title}" class="my-3 border-b border-indigo-500 pb-2"></h1>
     <div th:text="${article.content}" class="my-3 pb-40 border-b border-indigo-500 pb-2"></div>
@@ -35,4 +39,5 @@
         <input type="submit" value="댓글 작성" class="btn btn-primary my-2">
     </form>
 </div>
+</body>
 </html>

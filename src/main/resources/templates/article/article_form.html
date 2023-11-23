@@ -1,4 +1,8 @@
-<html layout:decorate="~{global/layout}">
+<html lang="ko" layout:decorate="~{global/layout}">
+<head>
+    <title>게시글 작성</title>
+</head>
+<body>
 <div layout:fragment="content" class="mx-4">
     <h5 class="my-3 border-b pb-2">게시글 작성</h5>
     <form th:action="@{/article/write}" th:object="${articleForm}" method="post">
@@ -34,4 +38,5 @@
         <input type="submit" value="등록하기" class="btn btn-primary my-2">
     </form>
 </div>
+</body>
 </html>
