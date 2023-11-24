@@ -37,6 +37,11 @@ public class SecurityConfig {
                         .usernameParameter("signInId")
 //                        .passwordParameter("password")
                         .defaultSuccessUrl("/"))
+                // logout
+                .logout((logout) -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true))
                 ;
         return http.build();
     }
