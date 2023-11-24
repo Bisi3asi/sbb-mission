@@ -36,7 +36,7 @@ public class ArticleService {
         }
     }
 
-    public void create(String title, String content){
+    public void create(String title, String content, Member author){
         Article article = Article.builder()
                 .title(title.trim())
                 .content(content.trim())
