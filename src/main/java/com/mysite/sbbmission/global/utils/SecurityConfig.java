@@ -23,10 +23,11 @@ public class SecurityConfig {
                 // 모든 경로에 대해 인증되지 않은 요청을 승인(개발용)
         http
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
-                // h2-console csrf 검증 예외 처리
+
+                        .requestMatchers("/**").permitAll())
+                // h2-console csrf 검증 예외 처리 3.2.0 버전부터는 AntPathRequestMatcher 생략 가능
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**")))
+                        .ignoringRequestMatchers("/h2-console/**"))
                 // h2-console X-Frame Option 헤더값 방지
                 .headers(headers -> headers
                         .addHeaderWriter(new XFrameOptionsHeaderWriter(
