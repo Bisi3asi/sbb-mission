@@ -1,6 +1,7 @@
 package com.mysite.sbbmission.comment;
 
 import com.mysite.sbbmission.article.Article;
+import com.mysite.sbbmission.member.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,4 +32,7 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY) // default 값인 EAGER를 사용하지만
     private Article article;
+
+    @ManyToOne
+    private Member author;
 }

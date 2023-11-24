@@ -41,6 +41,7 @@ public class ArticleService {
                 .title(title.trim())
                 .content(content.trim())
                 .createDateTime(LocalDateTime.now())
+                .author(author)
                 .build();
         articleRepository.save(article);
     }
