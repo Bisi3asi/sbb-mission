@@ -13,7 +13,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter @Builder
+@Getter
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment {
