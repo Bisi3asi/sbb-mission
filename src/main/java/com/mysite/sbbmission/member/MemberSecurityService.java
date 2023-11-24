@@ -20,6 +20,7 @@ public class MemberSecurityService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
     @Override
+    // 사용자명으로 비밀번호를 조회하여 리턴하는 메서드
     public UserDetails loadUserByUsername(String signInId) throws UsernameNotFoundException {
         Optional<Member> opMember = this.memberRepository.findBySignInId(signInId);
         if (opMember.isEmpty()) {
@@ -27,7 +28,7 @@ public class MemberSecurityService implements UserDetailsService {
         }
         Member member = opMember.get();
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if ("admin".equals(signInId)) {
+        if ("sbbadmin".equals(signInId)) {
             authorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.getValue()));
         } else {
             authorities.add(new SimpleGrantedAuthority(MemberRole.USER.getValue()));

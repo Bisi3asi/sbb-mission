@@ -4,36 +4,37 @@
 <head>
     <title>로그인</title>
 </head>
-<div layout:fragment="content"></div>
 <body>
 <div layout:fragment="content" class="flex items-center justify-center h-screen mx-4">
-    <form th:action="@{/member/signin}" method="post">
+    <form th:action="@{/member/signin}" method="post" onsubmit="submitSignInForm(this); return false;">
         <div class="form-control mx-auto w-96">
             <h1 class="text-5xl font-bold text-center mb-2">SBB-MISSION</h1>
             <div></div>
             <!-- 로그인 시 파라미터로 에러가 전달 -->
             <div th:if="${param.error}" role="alert" class="alert alert-warning my-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-                <span>잘못된 ID 또는 비밀번호입니다.</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                     viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+                <span id="errorMessage">잘못된 ID 또는 비밀번호입니다.</span>
             </div>
             <div th:unless="${param.error}" class="h-14 my-2"></div>
 
-            <label class="label">
+            <label for="signInId" class="form-label">
                 <span class="label-text">사용자 ID</span>
             </label>
-            <input type="text" name="signInId" id="signInId" placeholder="ID"
+            <input type="text" id="signInId" name="signInId" placeholder="ID"
                    class="form-input w-100 p-4 mb-2"/>
         </div>
 
         <div class="form-control mx-auto w-96">
-            <label class="label">
+            <label for="password" class="form-label">
                 <span class="label-text">사용자 비밀번호</span>
             </label>
-            <input type="password" name="password" id="password" placeholder="비밀번호"
+            <input type="password" id="password" name="password" placeholder="비밀번호"
                    class="form-input w-96 p-4 mb-2"/>
-            <input type="submit" value="로그인" class="btn btn-primary my-2 mb-5 w-auto">
-
+            <button type="submit" class="btn btn-primary my-2 mb-5 w-auto">로그인</button>
             <label class="label">
                 <span>&nbsp;</span>
                 <span class="label-text-alt">아직 회원이 아니신가요?</span>
@@ -42,7 +43,25 @@
             <a href="/member/signup" class="btn btn-success my-2 w-auto">회원가입</a>
         </div>
     </form>
-</div>
-</body>
+    <script>
+        function submitSignInForm(form) {
+            const inputSignInId = form.signInId;
+            const inputPassword = form.password;
+            const errorMessage = document.getElementById("errorMessage");
 
+            const signInId = inputSignInId.value;
+            const password = inputPassword.value;
+
+            if (signInId.length === 0 || password.length === 0) {
+                errorMessage.innerText = 'ID와 비밀번호를 입력해주세요.';
+                inputSignInId.focus();
+                return;
+            }
+
+            form.submit();
+        }
+    </script>
+</div>
+
+</body>
 </html>

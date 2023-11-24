@@ -54,7 +54,7 @@ public class MemberController {
 
     @GetMapping("/signin")
     public String signIn(){
-        return "member/signin_form.html";
+        return "member/signin_form";
     }
 }
 
