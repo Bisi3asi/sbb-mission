@@ -36,7 +36,7 @@
                     <span th:text="${article.commentList.size()}" th:style="'color: skyblue;'"></span>
                 </td>
                 <td th:text="${#temporals.format(article.createDateTime, 'yyyy.MM.dd HH:mm')}"></td>
-                <td><!-- 작성자 --></td>
+                <td><span th:if="${article.author != null}" th:text="${article.author.username}"></span></td>
                 <td><!-- 추천수 --></td>
             </tr>
             </tbody>
