@@ -1,8 +1,12 @@
 package com.mysite.sbbmission.article;
 
 import com.mysite.sbbmission.comment.Comment;
+import com.mysite.sbbmission.member.Member;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -35,4 +39,7 @@ public class Article {
             cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY) // default 값인 EAGER를 사용하지만,
     private List<Comment> commentList;
+
+    @ManyToOne
+    private Member author;
 }
