@@ -13,6 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+// Spring Security
+// Member <- UserDetail
+// MemberService <- UserDetailsService
+
+// Security
+// SigninId  <- username
+// password <- password
+
+
 @Service
 @RequiredArgsConstructor
 public class MemberSecurityService implements UserDetailsService {

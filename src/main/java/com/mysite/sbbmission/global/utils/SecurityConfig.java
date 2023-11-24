@@ -32,6 +32,8 @@ public class SecurityConfig {
                 // login
                 .formLogin((formLogin) -> formLogin
                         .loginPage("/member/signin")
+                        .usernameParameter("signInId")
+//                        .passwordParameter("password")
                         .defaultSuccessUrl("/"))
                 ;
         return http.build();
