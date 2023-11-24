@@ -34,8 +34,9 @@
         <input type="text" placeholder="게시물 검색하기" class="input input-bordered w-24 md:w-auto" />
     </div>
     <div>
-        <a class="btn btn-ghost text-2xl"
-           href="/member/signin">로그인 해주세요!</a>
+        <a sec:authorize="isAnonymous()"
+           href="/member/signin"
+           class="btn btn-ghost text-2xl">로그인 해주세요!</a>
     </div>
     <div class="dropdown dropdown-end flex-none">
         <button class="btn btn-square btn-ghost bg-white">
@@ -45,10 +46,10 @@
             </svg>
         </button>
         <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-            <li><a href="/member/signin">로그인</a></li>
-            <li><a href="/member/signup">회원가입</a></li>
-            <li><a href="/article/write">회원정보 조회/수정</a></li>
-            <li><a href="/article/list">로그아웃</a></li>
+            <li sec:authorize="isAnonymous()"><a href="/member/signin">로그인</a></li>
+            <li sec:authorize="isAnonymous()"><a href="/member/signup">회원가입</a></li>
+            <li sec:authorize="isAuthenticated()"><a href="/article/write">회원정보 조회/수정</a></li>
+            <li sec:authorize="isAuthenticated()"><a href="/member/signout">로그아웃</a></li>
         </ul>
     </div>
 </div>
