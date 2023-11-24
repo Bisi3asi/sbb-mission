@@ -1,13 +1,17 @@
 package com.mysite.sbbmission.article;
 
 import com.mysite.sbbmission.comment.CommentForm;
+import com.mysite.sbbmission.member.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -32,12 +36,12 @@ public class ArticleController {
         model.addAttribute("commentForm", new CommentForm());
         return "article/article_detail";
     }
-
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/write")
     public String showWriteForm(ArticleForm articleForm) {
         return "article/article_form";
     }
-
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/write")
     public String write(@ModelAttribute("articleForm")
                         @Valid ArticleForm articleForm, BindingResult brs, Principal principal) {

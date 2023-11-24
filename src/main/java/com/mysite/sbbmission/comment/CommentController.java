@@ -5,6 +5,7 @@ import com.mysite.sbbmission.article.ArticleService;
 import com.mysite.sbbmission.member.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.security.Principal;
 
 @RequiredArgsConstructor
 @Controller
@@ -21,6 +24,7 @@ public class CommentController {
     private final ArticleService articleService;
     private final MemberService memberService;
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/write/{id}")
     public String write(Model model, @PathVariable("id") Long id, @ModelAttribute("commentForm")
     @Valid CommentForm commentform, BindingResult brs, Principal principal){

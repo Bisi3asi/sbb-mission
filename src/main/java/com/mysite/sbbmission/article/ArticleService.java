@@ -1,6 +1,7 @@
 package com.mysite.sbbmission.article;
 
 import com.mysite.sbbmission.global.exceptions.DataNotFoundException;
+import com.mysite.sbbmission.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
