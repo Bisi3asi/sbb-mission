@@ -47,6 +47,7 @@ public class ArticleController {
     @PostMapping("/write")
     public String write(@ModelAttribute("articleForm")
                         @Valid ArticleForm articleForm, BindingResult brs, Principal principal) {
+        // @ModelAttribute : 스프링 2 -> 3으로 버전 업되며 붙이지 않아도 되지만 Intellij IDEA 내 html 컴파일 에러로 인식
         // Valid : ArticleForm(NotEmpty 등 작동), BindingResult(검증 작동)
         // BindingResult : 폼 객체를 도메인에 바인딩, 오류를 로깅해 저장
         // RequestParam : 매개변수와 폼을 바인딩, Spring은 요청 파라미터와 필드 이름 동일 시 @RequestParam 생략 가능
@@ -61,7 +62,7 @@ public class ArticleController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
-    public String articleModify(ArticleForm articleForm, @PathVariable("id") Long id, Principal principal) {
+    public String modify(ArticleForm articleForm, @PathVariable("id") Long id, Principal principal) {
         Article article = this.articleService.getArticle(id);
         if(!article.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
