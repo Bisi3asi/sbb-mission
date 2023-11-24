@@ -5,11 +5,13 @@ import com.mysite.sbbmission.member.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 
@@ -55,5 +57,17 @@ public class ArticleController {
         articleService.create(articleForm.getTitle(), articleForm.getContent(),
                 memberService.getMember(principal.getName()));
         return "redirect:/article/list";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/modify/{id}")
+    public String articleModify(ArticleForm articleForm, @PathVariable("id") Long id, Principal principal) {
+        Article article = this.articleService.getArticle(id);
+        if(!article.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+        }
+        articleForm.setTitle(article.getTitle());
+        articleForm.setContent(article.getContent());
+        return "article/article_form";
     }
 }
