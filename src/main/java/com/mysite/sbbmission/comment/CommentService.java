@@ -32,7 +32,7 @@ public class CommentService {
         if (comment.isPresent()){
             return comment.get();
         }
-        else throw new DataNotFoundException("comment not found");
+        else throw new DataNotFoundException("존재하지 않는 댓글입니다.");
     }
 
     public void update(Comment comment, String content){

@@ -35,7 +35,7 @@ public class ArticleService {
             return article.get();
         }
         else {
-            throw new DataNotFoundException("존재하지 않는 게시물입니다");
+            throw new DataNotFoundException("존재하지 않는 게시물입니다.");
         }
     }
 
