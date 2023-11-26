@@ -41,4 +41,9 @@ public class CommentService {
                 .build();
         commentRepository.save(comment);
     }
+
+    @Transactional
+    public void delete(Comment comment){
+        commentRepository.delete(comment);
+    }
 }
