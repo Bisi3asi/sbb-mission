@@ -1,14 +1,11 @@
 package com.mysite.sbbmission.member;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Getter
 public enum MemberUtilConst {
     ;
     public static class SIGNIN_ID {
-
         public static final int MINLENGTH = 8;
         public static final int MAXLENGTH = 20;
         public static final String UNVALID_LENGTH_MESSAGE = "ID는 8자 이상, 20자 이하로 설정해주세요.";

@@ -18,6 +18,7 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
+    // id(중복) 에러메시지 pw, pw1, 닉네임(중복), 이메일(중복)
     public void create(MemberSignUpForm memberSignUpForm) {
         StringBuilder exceptionBuilder = new StringBuilder();
         if (memberRepository.findBySignInId(memberSignUpForm.getSignInId()).isPresent())
