@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{global/layout}">
+
+<head>
+    <title>존재하지 않는 페이지입니다.</title>
+</head>
+<body>
+<div layout:fragment="content" class="mx-4 h-screen flex flex-col justify-center items-center">
+    <div class="my-4">
+        <h1 class="text-5xl font-bold text-center">OOPS!</h1>
+    </div>
+
+    <div class="my-4">
+        <h1 class="text-3xl text-center">관리자나 사용자의 요청에 의해 삭제된 페이지입니다.</h1>
+    </div>
+
+    <div class="my-4">
+        <h5 class="text-3xl text-center" th:text="|error message : ${error}|"></h5>
+    </div>
+
+    <div class="my-10">
+        <a href="/">
+            <h1 th:text="'메인으로 돌아갈게요..'" class="btn btn-lg text-center"></h1>
+        </a>
+    </div>
+</div>
+</body>
+</html>
