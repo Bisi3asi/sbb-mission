@@ -49,4 +49,15 @@ public class CommentController {
         // todo : modify PostMapping으로 별도로 js로 view에서 바로 수정가능하게끔 작업
         return "comment_form";
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/delete/{id}")
+    public String delete(Principal principal, @PathVariable("id") Integer id) {
+        Comment comment = commentService.getComment(id);
+        if (!comment.getAuthor().getSignInId().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+        }
+        commentService.delete(comment);
+        return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
+    }
 }
