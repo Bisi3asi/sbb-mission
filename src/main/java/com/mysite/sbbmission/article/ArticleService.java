@@ -49,4 +49,9 @@ public class ArticleService {
                 .build();
         articleRepository.save(article);
     }
+
+    @Transactional
+    public void delete(Article article){
+        articleRepository.delete(article);
+    }
 }
