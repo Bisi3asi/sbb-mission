@@ -70,7 +70,7 @@
         </div>
     </div>
 
-    <!-- article comment -->
+    <!-- comment -->
     <div th:each="comment : ${article.commentList}" class="mx-2 mt-2">
         <div class="flex items-center bg-gray-600 pl-2 py-1">
             <div class="btn btn-square btn-ghost bg-white mr-1">
@@ -113,9 +113,31 @@
         <ul class="bg-gray-700 mb-2">
             <li th:text="${comment.content}" class="py-2 pl-6"></li>
             <li>
-                <form th:id="'modifyCommentForm-'+${comment.id}" class="flex-col hidden">
+                <form th:action="@{|/comment/modify/${comment.id}|}" th:object="${commentForm}" method="post"
+                      th:id="'modifyCommentForm-'+${comment.id}"
+                      class="flex-col hidden">
+                    <!-- 수정 버튼 클릭 시 토글 영역-->
                     <div class="form-control mx-auto my-auto border border-green-500">
-                        <textarea maxlength=300 rows="3" th:text="${comment.content}" class="form-input w-full pl-6 py-1"></textarea>
+                        <textarea maxlength=300 rows="5"
+                                  th:text="${comment.content}"
+                                  th:field="*{content}"
+                                  class="form-input w-full px-6 py-1">
+                        </textarea>
+                    </div>
+                    <div class="flex justify-end">
+                        <!-- error message -->
+                        <label class="flex justify-end label">
+                            <span></span>
+                            <span>&nbsp;</span>
+                            <span th:if="${#fields.hasErrors('content')}"
+                                  th:each="err:${#fields.errors('content')}"
+                                  th:text="${err}" class="error-message text-red-500 text-sm"></span>
+                        </label>
+                        <div sec:authorize="isAuthenticated()">
+                            <div>
+                                <input type="submit" value="수정 완료" class="btn btn-sm btn-primary mx-2 my-1">
+                            </div>
+                        </div>
                     </div>
                 </form>
             </li>
@@ -129,7 +151,7 @@
             <textarea sec:authorize="isAnonymous()" disabled maxlength=300 th:field="*{content}" rows="5"
                       placeholder="로그인 후 댓글 작성이 가능합니다." class="form-input w-full px-2 py-2"></textarea>
             <textarea sec:authorize="isAuthenticated()" maxlength=300 th:field="*{content}" rows="5"
-                      placeholder="댓글을 작성해주세요." class="form-input w-full px-2 py-2"></textarea>
+                      placeholder="댓글을 작성해주세요." class="form-input w-full px-6 py-2"></textarea>
         </div>
         <!-- 댓글 작성 오류 발생 시 error message -->
         <label class="label">
