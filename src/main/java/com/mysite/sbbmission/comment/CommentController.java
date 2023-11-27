@@ -2,6 +2,7 @@ package com.mysite.sbbmission.comment;
 
 import com.mysite.sbbmission.article.Article;
 import com.mysite.sbbmission.article.ArticleService;
+import com.mysite.sbbmission.member.Member;
 import com.mysite.sbbmission.member.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -64,6 +65,42 @@ public class CommentController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
         commentService.delete(comment);
+        return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/like/{id}")
+    public String like(Principal principal, @PathVariable("id") Long id) {
+        Comment comment = commentService.getComment(id);
+        Member member = memberService.getMember(principal.getName());
+        commentService.addLike(comment, member);
+        return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/resetlike/{id}")
+    public String resetLike(Principal principal, @PathVariable("id") Long id) {
+        Comment comment = commentService.getComment(id);
+        Member member = memberService.getMember(principal.getName());
+        commentService.removeLike(comment, member);
+        return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/hate/{id}")
+    public String hate(Principal principal, @PathVariable("id") Long id) {
+        Comment comment = commentService.getComment(id);
+        Member member = memberService.getMember(principal.getName());
+        commentService.addHate(comment, member);
+        return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/resethate/{id}")
+    public String resetHate(Principal principal, @PathVariable("id") Long id) {
+        Comment comment = commentService.getComment(id);
+        Member member = memberService.getMember(principal.getName());
+        commentService.removeHate(comment, member);
         return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
     }
 }
