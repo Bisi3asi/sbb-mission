@@ -39,6 +39,7 @@ public class CommentService {
     public void update(Comment comment, CommentForm commentForm){
         comment = comment.toBuilder()
                 .content(commentForm.getContent())
+                .modifiedDateTime(LocalDateTime.now())
                 .build();
         commentRepository.save(comment);
     }

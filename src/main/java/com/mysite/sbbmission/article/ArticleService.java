@@ -54,6 +54,7 @@ public class ArticleService {
         article = article.toBuilder()
                 .title(articleForm.getTitle())
                 .content(articleForm.getContent())
+                .modifiedDateTime(LocalDateTime.now())
                 .build();
         articleRepository.save(article);
     }
