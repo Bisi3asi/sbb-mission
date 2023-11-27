@@ -15,7 +15,7 @@
 <body>
 <div layout:fragment="content" class="mx-4">
     <!-- article title -->
-    <h1 th:text="${article.title}" class="mt-3 pb-2"></h1>
+    <h1 th:text="${article.title}" class="mt-3 pb-2 pl-2"></h1>
     <!-- article author -->
     <div class="flex items-center bg-gray-600 pl-2 py-1 border-t border-indigo-500">
         <div class="btn btn-square btn-ghost bg-white mr-1">
@@ -36,9 +36,18 @@
             </label>
         </div>
         <div>
-            <label class=label-text-alt th:if="${article.createDateTime != null}"
+            <label class=label-text-alt th:if="${article.createDateTime != null and article.modifiedDateTime == null}"
                    th:text="${#temporals.format(article.createDateTime, 'yyyy.MM.dd HH:mm')}"></label>
         </div>
+        <div>
+            <label class=label-text-alt th:if="${article.modifiedDateTime != null}"
+                   th:text="${#temporals.format(article.modifiedDateTime, 'yyyy.MM.dd HH:mm')}"></label>
+        </div>
+        <div class="mr-1">
+            <label class=label-text-alt th:if="${article.modifiedDateTime != null}"
+                   th:text="'(수정됨)'"></label>
+        </div>
+
         <!-- 본문 수정 -->
         <div sec:authorize="isAuthenticated()" th:if="${article.author != null
             and #authentication.getPrincipal().getUsername() == article.author.signInId}"
@@ -56,7 +65,7 @@
     </div>
 
     <!-- article content -->
-    <div th:text="${article.content}" class="my-3 pb-40 border-b border-indigo-500 pb-2"></div>
+    <div th:text="${article.content}" class="my-3 pb-40 pl-4 border-b border-indigo-500 pr-2 pb-2"></div>
 
     <!-- article comment index -->
     <div class="flex items-center mb-2">
@@ -91,8 +100,17 @@
                 </label>
             </div>
             <div class="mr-1">
-                <label class=label-text-alt th:if="${comment.createDateTime != null}"
+                <label class=label-text-alt
+                       th:if="${comment.createDateTime != null and comment.modifiedDateTime == null}"
                        th:text="${#temporals.format(comment.createDateTime, 'yyyy.MM.dd HH:mm')}"></label>
+            </div>
+            <div>
+                <label class=label-text-alt th:if="${comment.modifiedDateTime != null}"
+                       th:text="${#temporals.format(comment.modifiedDateTime, 'yyyy.MM.dd HH:mm')}"></label>
+            </div>
+            <div class="mr-1">
+                <label class=label-text-alt th:if="${comment.modifiedDateTime != null}"
+                       th:text="'(수정됨)'"></label>
             </div>
             <!-- 댓글 수정 버튼 -->
             <div th:if="${comment.author != null
