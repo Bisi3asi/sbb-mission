@@ -148,12 +148,11 @@
 
         <!-- comment 내용 -->
         <ul class="bg-gray-700 mb-2">
-            <li th:text="${comment.content}" class="py-2 pl-6">
-                <a th:id="|comment_${comment.id}|"></a>
-            </li>
+            <li th:text="${comment.content}" class="py-2 pl-6"></li>
 
             <li class="flex justify-end mr-1 pb-1">
                 <div th:with="likerSignInIds=${commentLikerIdList[comment.id]}">
+                    <a th:id="|comment_${comment.id}|"></a>
                     <a th:unless="${#strings.contains(likerSignInIds, (#authentication.getPrincipal().getUsername()))}"
                        href="javascript:void(0);" class="like btn btn-ghost btn-sm"
                        th:data-uri="@{|/comment/like/${comment.id}|}">

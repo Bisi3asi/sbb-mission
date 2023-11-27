@@ -17,7 +17,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public void create(Article article, CommentForm commentForm, Member author) {
+    public Comment create(Article article, CommentForm commentForm, Member author) {
         Comment comment = Comment.builder()
                 .content(commentForm.getContent().trim())
                 .createDateTime(LocalDateTime.now())
@@ -25,6 +25,7 @@ public class CommentService {
                 .author(author)
                 .build();
         commentRepository.save(comment);
+        return comment;
     }
 
     public Comment getComment(long id){

@@ -35,8 +35,8 @@ public class CommentController {
             model.addAttribute("article", article);
             return "article/article_detail";
         }
-        commentService.create(article, commentForm, memberService.getMember(principal.getName()));
-        return String.format("redirect:/article/detail/%s", id);
+        Comment comment = commentService.create(article, commentForm, memberService.getMember(principal.getName()));
+        return String.format("redirect:/article/detail/%s#comment_%s", comment.getArticle().getId(), comment.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -54,7 +54,7 @@ public class CommentController {
             return "article/article_detail";
         }
         commentService.update(comment, commentForm);
-        return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
+        return String.format("redirect:/article/detail/%s#comment_%s", comment.getArticle().getId(), comment.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -74,7 +74,7 @@ public class CommentController {
         Comment comment = commentService.getComment(id);
         Member member = memberService.getMember(principal.getName());
         commentService.addLike(comment, member);
-        return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
+        return String.format("redirect:/article/detail/%s#comment_%s", comment.getArticle().getId(), comment.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -83,7 +83,7 @@ public class CommentController {
         Comment comment = commentService.getComment(id);
         Member member = memberService.getMember(principal.getName());
         commentService.removeLike(comment, member);
-        return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
+        return String.format("redirect:/article/detail/%s#comment_%s", comment.getArticle().getId(), comment.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -92,7 +92,7 @@ public class CommentController {
         Comment comment = commentService.getComment(id);
         Member member = memberService.getMember(principal.getName());
         commentService.addHate(comment, member);
-        return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
+        return String.format("redirect:/article/detail/%s#comment_%s", comment.getArticle().getId(), comment.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -101,6 +101,6 @@ public class CommentController {
         Comment comment = commentService.getComment(id);
         Member member = memberService.getMember(principal.getName());
         commentService.removeHate(comment, member);
-        return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
+        return String.format("redirect:/article/detail/%s#comment_%s", comment.getArticle().getId(), comment.getId());
     }
 }
