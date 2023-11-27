@@ -1,6 +1,7 @@
 package com.mysite.sbbmission.article;
 
 import com.mysite.sbbmission.comment.CommentForm;
+import com.mysite.sbbmission.member.Member;
 import com.mysite.sbbmission.member.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,12 @@ public class ArticleController {
     public String showDetail(Model model, @PathVariable("id") Long id) {
         Article article = articleService.getArticle(id);
 
+        // 추천, 비추천자 view 전송
+        model.addAttribute("articleLikerIdList", articleService.getArticleLikerIdList(article));
+        model.addAttribute("articleHaterIdList",  articleService.getArticleHaterIdList(article));
+        model.addAttribute("commentLikerIdList", articleService.getCommentLikerIdList(article));
+        model.addAttribute("commentHaterIdList", articleService.getCommentHaterIdList(article));
+
         model.addAttribute("article", article);
         model.addAttribute("commentForm", new CommentForm());
         return "article/article_detail";
@@ -65,7 +72,7 @@ public class ArticleController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
     public String showModifyForm(ArticleForm articleForm, @PathVariable("id") Long id, Principal principal) {
-        Article article = this.articleService.getArticle(id);
+        Article article = articleService.getArticle(id);
         if (!article.getAuthor().getSignInId().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
@@ -78,7 +85,7 @@ public class ArticleController {
     @PostMapping("/modify/{id}")
     public String modify(@ModelAttribute("articleForm") @Valid ArticleForm articleForm, BindingResult brs,
                          @PathVariable("id") Long id,  Principal principal) {
-        Article article = this.articleService.getArticle(id);
+        Article article = articleService.getArticle(id);
         if (!article.getAuthor().getSignInId().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
@@ -98,5 +105,41 @@ public class ArticleController {
         }
         articleService.delete(article);
         return "redirect:/";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/like/{id}")
+    public String like(Principal principal, @PathVariable("id") Long id) {
+        Article article = articleService.getArticle(id);
+        Member member = memberService.getMember(principal.getName());
+        articleService.addLike(article, member);
+        return String.format("redirect:/article/detail/%s", id);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/resetlike/{id}")
+    public String resetLike(Principal principal, @PathVariable("id") Long id) {
+        Article article = articleService.getArticle(id);
+        Member member = memberService.getMember(principal.getName());
+        articleService.removeLike(article, member);
+        return String.format("redirect:/article/detail/%s", id);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/hate/{id}")
+    public String hate(Principal principal, @PathVariable("id") Long id) {
+        Article article = articleService.getArticle(id);
+        Member member = memberService.getMember(principal.getName());
+        articleService.addHate(article, member);
+        return String.format("redirect:/article/detail/%s", id);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/resethate/{id}")
+    public String resetHate(Principal principal, @PathVariable("id") Long id) {
+        Article article = articleService.getArticle(id);
+        Member member = memberService.getMember(principal.getName());
+        articleService.removeHate(article, member);
+        return String.format("redirect:/article/detail/%s", id);
     }
 }

@@ -1,5 +1,6 @@
 package com.mysite.sbbmission.article;
 
+import com.mysite.sbbmission.comment.Comment;
 import com.mysite.sbbmission.global.exceptions.DataNotFoundException;
 import com.mysite.sbbmission.member.Member;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -64,4 +67,60 @@ public class ArticleService {
         articleRepository.delete(article);
     }
 
+    @Transactional
+    public void addLike(Article article, Member member) {
+        article.getLiker().add(member);
+        articleRepository.save(article);
+    }
+
+    @Transactional
+    public void removeLike(Article article, Member member) {
+        article.getLiker().remove(member);
+        articleRepository.save(article);
+    }
+
+    @Transactional
+    public void addHate(Article article, Member member) {
+        article.getHater().add(member);
+        articleRepository.save(article);
+    }
+
+    @Transactional
+    public void removeHate(Article article, Member member) {
+        article.getHater().remove(member);
+        articleRepository.save(article);
+    }
+
+    // 게시글을 추천한 사용자 id 리스트를 리턴
+    public List<String> getArticleLikerIdList(Article article) {
+        return article.getLiker().stream()
+                .map(Member::getSignInId)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getArticleHaterIdList(Article article) {
+        return article.getHater().stream()
+                .map(Member::getSignInId)
+                .collect(Collectors.toList());
+    }
+
+    // 게시글의 코멘트를 추천한 사용자 id 리스트를 리턴
+    public Map<Long, List<String>> getCommentLikerIdList(Article article) {
+        return article.getCommentList().stream()
+                .collect(Collectors.toMap(
+                        Comment::getId,
+                        comment -> comment.getLiker().stream()
+                                .map(Member::getSignInId)
+                                .collect(Collectors.toList())
+                ));
+    }
+    public Map<Long, List<String>> getCommentHaterIdList(Article article) {
+        return article.getCommentList().stream()
+                .collect(Collectors.toMap(
+                        Comment::getId,
+                        comment -> comment.getHater().stream()
+                                .map(Member::getSignInId)
+                                .collect(Collectors.toList())
+                ));
+    }
 }
