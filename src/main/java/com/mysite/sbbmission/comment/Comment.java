@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -33,4 +34,10 @@ public class Comment {
 
     @ManyToOne
     private Member author;
+
+    @ManyToMany
+    Set<Member> liker;
+
+    @ManyToMany
+    Set<Member> hater;
 }
