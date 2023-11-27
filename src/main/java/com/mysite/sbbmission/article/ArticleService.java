@@ -28,22 +28,21 @@ public class ArticleService {
         return this.articleRepository.findAll(pageable);
     }
 
-    public Article getArticle(Long id){
+    public Article getArticle(Long id) {
         Optional<Article> article = this.articleRepository.findById(id);
 
-        if (article.isPresent()){
+        if (article.isPresent()) {
             return article.get();
-        }
-        else {
+        } else {
             throw new DataNotFoundException("존재하지 않는 게시물입니다.");
         }
     }
 
     @Transactional
-    public void create(String title, String content, Member author){
+    public void create(ArticleForm articleForm, Member author) {
         Article article = Article.builder()
-                .title(title.trim())
-                .content(content.trim())
+                .title(articleForm.getTitle().trim())
+                .content(articleForm.getContent().trim())
                 .createDateTime(LocalDateTime.now())
                 .author(author)
                 .build();
@@ -51,7 +50,17 @@ public class ArticleService {
     }
 
     @Transactional
-    public void delete(Article article){
+    public void update(Article article, ArticleForm articleForm) {
+        article = article.toBuilder()
+                .title(articleForm.getTitle())
+                .content(articleForm.getContent())
+                .build();
+        articleRepository.save(article);
+    }
+
+    @Transactional
+    public void delete(Article article) {
         articleRepository.delete(article);
     }
+
 }

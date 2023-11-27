@@ -39,11 +39,13 @@ public class ArticleController {
         model.addAttribute("commentForm", new CommentForm());
         return "article/article_detail";
     }
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/write")
     public String showWriteForm(ArticleForm articleForm) {
         return "article/article_form";
     }
+
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/write")
     public String write(@ModelAttribute("articleForm")
@@ -56,21 +58,36 @@ public class ArticleController {
         if (brs.hasErrors()) {
             return "article/article_form";
         }
-        articleService.create(articleForm.getTitle(), articleForm.getContent(),
-                memberService.getMember(principal.getName()));
+        articleService.create(articleForm, memberService.getMember(principal.getName()));
         return "redirect:/article/list";
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
-    public String modify(ArticleForm articleForm, @PathVariable("id") Long id, Principal principal) {
+    public String showModifyForm(ArticleForm articleForm, @PathVariable("id") Long id, Principal principal) {
         Article article = this.articleService.getArticle(id);
-        if(!article.getAuthor().getUsername().equals(principal.getName())) {
+        if (!article.getAuthor().getSignInId().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         articleForm.setTitle(article.getTitle());
         articleForm.setContent(article.getContent());
-        return "article/article_form";
+        return "article/article_modify_form";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/modify/{id}")
+    public String modify(@ModelAttribute("articleForm") @Valid ArticleForm articleForm,
+                         @PathVariable("id") Long id, Principal principal, BindingResult brs) {
+        Article article = this.articleService.getArticle(id);
+        if (!article.getAuthor().getSignInId().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+        }
+        if (brs.hasErrors()) {
+            // todo : fix validation error to transfer view (now : throws http error 400)
+            return "article/article_modify_form";
+        }
+        articleService.update(article, articleForm);
+        return String.format("redirect:/article/detail/%s", id);
     }
 
     @PreAuthorize("isAuthenticated()")
