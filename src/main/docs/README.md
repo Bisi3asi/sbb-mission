@@ -21,4 +21,8 @@
 -[x] Problem : `Spring Security` 회원 로그인 `DTO` `POST` 전송 시 로그인 ID 값이 넘어가지 않는 문제   
 `Spring Security UserDetailService`, `loadUserByUsername(String signInId)`    
 -[x] Why? : `Spring Security`에서 자동으로 입력받은 login의 파라미터 이름이 `username` 이기 때문에 문제 발생  
--[x] Solved : `Spring SecurityFilterChain` `.formLogin` 에서 `.usernameParameter("signInId)`로 수정 
+-[x] Solved : `Spring SecurityFilterChain` `.formLogin` 에서 `.usernameParameter("signInId")`로 수정    
+
+-[x] Problem : `@ControllerAdvice`, `@ExceptionHandler` 활용 예외 발생 시 커스텀 예외 페이지로 연결 시도했으나 
+기본 `whitelabel page로 연결` 지속
+-[x] Solved : `application.yaml` 에서 server.error.whitelabel.enabled = `false`로 변경
