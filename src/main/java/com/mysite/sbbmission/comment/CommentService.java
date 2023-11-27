@@ -17,9 +17,9 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public void create(Article article, String content, Member author) {
+    public void create(Article article, CommentForm commentForm, Member author) {
         Comment comment = Comment.builder()
-                .content(content.trim())
+                .content(commentForm.getContent().trim())
                 .createDateTime(LocalDateTime.now())
                 .article(article)
                 .author(author)
@@ -35,9 +35,10 @@ public class CommentService {
         else throw new DataNotFoundException("존재하지 않는 댓글입니다.");
     }
 
-    public void update(Comment comment, String content){
-        comment.toBuilder()
-                .content(content)
+    @Transactional
+    public void update(Comment comment, CommentForm commentForm){
+        comment = comment.toBuilder()
+                .content(commentForm.getContent())
                 .build();
         commentRepository.save(comment);
     }
@@ -46,4 +47,5 @@ public class CommentService {
     public void delete(Comment comment){
         commentRepository.delete(comment);
     }
+
 }
