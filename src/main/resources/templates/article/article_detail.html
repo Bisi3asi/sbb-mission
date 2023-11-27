@@ -1,6 +1,16 @@
 <html lang="ko" layout:decorate="~{global/layout}">
 <head>
     <title th:text="${article.title}"></title>
+    <script>
+        function toggleCommentForm(commentId) {
+            var formElement = document.getElementById('modifyCommentForm-' + commentId);
+            if (formElement) {
+                formElement.classList.toggle('hidden');
+            } else {
+                console.error('ID가 "modifyCommentForm-' + commentId + '"인 요소를 찾을 수 없습니다.');
+            }
+        }
+    </script>
 </head>
 <body>
 <div layout:fragment="content" class="mx-4">
@@ -88,26 +98,24 @@
             <div th:if="${comment.author != null
             and #authentication.getPrincipal().getUsername() == comment.author.signInId}"
                  class="btn btn-ghost my-2">
-                <button th:text="'수정'" class="text-blue-500"></button>
+                <button th:text="'수정'" class="text-blue-500" th:onclick="toggleCommentForm([[${comment.id}]])"></button>
             </div>
             <!-- 댓글 삭제 버튼 -->
             <a sec:authorized="isAuthenticated()"
-                th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.signInId}"
-                href="javascript:void(0);"
-                th:data-uri="@{|/comment/delete/${comment.id}|}"
-                class="delete btn btn-ghost my-2">
+               th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.signInId}"
+               href="javascript:void(0);"
+               th:data-uri="@{|/comment/delete/${comment.id}|}"
+               class="delete btn btn-ghost my-2">
                 <button th:text="'삭제'" class="text-red-500"></button>
             </a>
 
         </div>
         <ul class="bg-gray-700 mb-2">
             <li th:text="${comment.content}" class="py-2 pl-6"></li>
-            <li id="modifyCommentForm-${comment.id}" class="flex-col hidden">
-                <form>
+            <li>
+                <form th:id="'modifyCommentForm-'+${comment.id}" class="flex-col hidden">
                     <div class="form-control mx-auto my-auto border border-green-500">
-                        <textarea maxlength=300 rows="3"
-                                  class="form-input w-full pl-6 py-1">
-                        </textarea>
+                        <textarea maxlength=300 rows="3" th:text="${comment.content}" class="form-input w-full pl-6 py-1"></textarea>
                     </div>
                 </form>
             </li>
@@ -141,13 +149,13 @@
 </div>
 <!-- delete post -->
 <script layout:fragment="script" type='text/javascript'>
+
     const delete_elements = document.getElementsByClassName("delete");
     Array.from(delete_elements).forEach(function (element) {
         element.addEventListener('click', function () {
             if (confirm("정말로 삭제하시겠습니까?")) {
                 location.href = this.dataset.uri;
             }
-            ;
         });
     });
 </script>
