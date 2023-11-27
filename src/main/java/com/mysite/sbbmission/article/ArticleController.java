@@ -48,8 +48,8 @@ public class ArticleController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/write")
-    public String write(@ModelAttribute("articleForm")
-                        @Valid ArticleForm articleForm, BindingResult brs, Principal principal) {
+    public String write(@ModelAttribute("articleForm") @Valid ArticleForm articleForm,
+                        BindingResult brs, Principal principal) {
         // @ModelAttribute : 스프링 2 -> 3으로 버전 업되며 붙이지 않아도 되지만 Intellij IDEA 내 html 컴파일 에러로 인식
         // Valid : ArticleForm(NotEmpty 등 작동), BindingResult(검증 작동)
         // BindingResult : 폼 객체를 도메인에 바인딩, 오류를 로깅해 저장
@@ -76,14 +76,13 @@ public class ArticleController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{id}")
-    public String modify(@ModelAttribute("articleForm") @Valid ArticleForm articleForm,
-                         @PathVariable("id") Long id, Principal principal, BindingResult brs) {
+    public String modify(@ModelAttribute("articleForm") @Valid ArticleForm articleForm, BindingResult brs,
+                         @PathVariable("id") Long id,  Principal principal) {
         Article article = this.articleService.getArticle(id);
         if (!article.getAuthor().getSignInId().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         if (brs.hasErrors()) {
-            // todo : fix validation error to transfer view (now : throws http error 400)
             return "article/article_modify_form";
         }
         articleService.update(article, articleForm);
