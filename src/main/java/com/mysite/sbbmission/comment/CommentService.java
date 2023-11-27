@@ -69,7 +69,7 @@ public class CommentService {
 
     @Transactional
     public void removeHate(Comment comment, Member member) {
-        comment.getHater().add(member);
+        comment.getHater().remove(member);
         commentRepository.save(comment);
     }
 
