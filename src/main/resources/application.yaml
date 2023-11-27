@@ -3,7 +3,7 @@ server:
   address:
   error:
     whitelabel:
-      enabled: false
+      enabled: true
 spring:
   thymeleaf:
     cache: false

@@ -148,7 +148,7 @@
 
         <!-- comment 내용 -->
         <ul class="bg-gray-700 mb-2">
-            <li th:text="${comment.content}" class="py-2 pl-6"></li>
+            <li th:utext="${comment.content}" class="py-2 pl-6"></li>
 
             <li class="flex justify-end mr-1 pb-1">
                 <div th:with="likerSignInIds=${commentLikerIdList[comment.id]}">
