@@ -3,10 +3,7 @@ package com.mysite.sbbmission.article;
 import com.mysite.sbbmission.comment.Comment;
 import com.mysite.sbbmission.member.Member;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -16,8 +13,8 @@ import java.util.List;
 @Entity
 @Getter
 @Builder(toBuilder = true)
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
