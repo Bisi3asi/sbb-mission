@@ -55,7 +55,9 @@
     </div>
 
     <!-- article content -->
-    <div th:text="${article.content}" class="my-3 pb-40 pl-4 border-b border-indigo-500 pr-2 pb-2"></div>
+    <div th:text="${article.content}" class="my-3 pb-40 pl-4 border-b border-indigo-500 pr-2 pb-2">
+        <a th:id="|article_${article.id}|"></a>
+    </div>
     <div class="flex justify-center">
         <a th:unless="${articleLikerIdList.contains(#authentication.getPrincipal().getUsername())}"
            href="javascript:void(0);" class="like btn btn-ghost btn-sm"
@@ -146,7 +148,10 @@
 
         <!-- comment 내용 -->
         <ul class="bg-gray-700 mb-2">
-            <li th:text="${comment.content}" class="py-2 pl-6"></li>
+            <li th:text="${comment.content}" class="py-2 pl-6">
+                <a th:id="|comment_${comment.id}|"></a>
+            </li>
+
             <li class="flex justify-end mr-1 pb-1">
                 <div th:with="likerSignInIds=${commentLikerIdList[comment.id]}">
                     <a th:unless="${#strings.contains(likerSignInIds, (#authentication.getPrincipal().getUsername()))}"
