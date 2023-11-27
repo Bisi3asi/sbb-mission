@@ -49,4 +49,28 @@ public class CommentService {
         commentRepository.delete(comment);
     }
 
+    @Transactional
+    public void addLike(Comment comment, Member member) {
+        comment.getLiker().add(member);
+        commentRepository.save(comment);
+    }
+
+    @Transactional
+    public void removeLike(Comment comment, Member member) {
+        comment.getLiker().remove(member);
+        commentRepository.save(comment);
+    }
+
+    @Transactional
+    public void addHate(Comment comment, Member member) {
+        comment.getHater().add(member);
+        commentRepository.save(comment);
+    }
+
+    @Transactional
+    public void removeHate(Comment comment, Member member) {
+        comment.getHater().add(member);
+        commentRepository.save(comment);
+    }
+
 }
