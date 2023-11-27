@@ -31,3 +31,6 @@
     
 -[x] Problem : `ArticleController.modify`에서 `bindingResult`가 정상적으로 넘어가지 않고 `400 error` 발생
 -[x] Solved : `@Valid` 뒤로 `bindingResult` 변수 순서 위치 변경
+    
+    
+-[ ] Problem : `TailWindCSS` 적용 시 `CommonMark` 적용이 안되는 문제
