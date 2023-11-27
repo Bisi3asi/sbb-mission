@@ -1,0 +1,42 @@
+<html lang="ko" layout:decorate="~{global/layout}">
+<head>
+    <title>게시글 수정</title>
+</head>
+<body>
+<div layout:fragment="content" class="mx-4">
+    <h5 class="my-3 border-b pb-2">게시글 수정</h5>
+    <form th:action="@{|/article/modify/${id}|}" th:object="${articleForm}" method="post">
+        <div class="form-control mx-auto">
+            <label class="label">
+                <span class="label-text">글 제목</span>
+                <span class="label-text-alt">50자 미만</span>
+            </label>
+            <input type="text" th:field="*{title}" placeholder="글 제목을 작성해주세요."
+                   class="form-input w-full p-4"/>
+            <label class="label">
+                <span class="label-text-alt"></span>
+                <span>&nbsp;</span>
+                <span th:if="${#fields.hasErrors('title')}" th:each="err:${#fields.errors('title')}"
+                      th:text="${err}" class="error-message text-red-500 text-sm"></span>
+            </label>
+        </div>
+        <div class="form-control mx-auto">
+            <label class="label">
+                <span class="label-text">글 내용</span>
+                <span class="label-text-alt color:red">500자 미만</span>
+            </label>
+            <textarea th:field="*{content}" placeholder="글 내용을 작성해주세요. (마크다운 문법 지원)"
+                      class="form-input w-full h-80 p-4">
+            </textarea>
+            <label class="label">
+                <span class="label-text-alt"></span>
+                <span>&nbsp;</span>
+                <span th:if="${#fields.hasErrors('content')}" th:each="err:${#fields.errors('content')}"
+                      th:text="${err}" class="error-message text-red-500 text-sm"></span>
+            </label>
+        </div>
+        <input type="submit" value="등록하기" class="btn btn-primary my-2">
+    </form>
+</div>
+</body>
+</html>
