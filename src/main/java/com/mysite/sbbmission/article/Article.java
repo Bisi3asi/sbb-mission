@@ -6,11 +6,12 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Getter
@@ -35,10 +36,9 @@ public class Article {
     @LastModifiedDate
     private LocalDateTime modifiedDateTime;
 
-    @OneToMany(mappedBy = "article",
-            cascade = CascadeType.REMOVE,
-            fetch = FetchType.LAZY) // default 값인 EAGER를 사용하지만,
-    private List<Comment> commentList;
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Comment> commentList = new ArrayList<>();
 
     @ManyToOne
     private Member author;
