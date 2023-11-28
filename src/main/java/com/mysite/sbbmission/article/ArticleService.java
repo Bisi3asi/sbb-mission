@@ -57,6 +57,8 @@ public class ArticleService {
                 .title(articleForm.getTitle())
                 .content(articleForm.getContent())
                 .build();
+        // 영속성 컨텍스트는, JPA findbyId 등 해당 메소드로 불러왔을 때만 사용 가능
+        articleRepository.save(article);
     }
 
     @Transactional
