@@ -116,4 +116,13 @@ public class ArticleService {
                                 .collect(Collectors.toList())
                 ));
     }
+
+    public Model addDetailPageHaterLikerIdList(Model model, Article article){
+        model.addAttribute("articleLikerIdList", getArticleLikerIdList(article));
+        model.addAttribute("articleHaterIdList", getArticleHaterIdList(article));
+        model.addAttribute("commentLikerIdList", getCommentLikerIdList(article));
+        model.addAttribute("commentHaterIdList", getCommentHaterIdList(article));
+        return model;
+    }
+
 }

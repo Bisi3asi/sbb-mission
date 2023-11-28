@@ -33,6 +33,7 @@ public class CommentController {
         if (brs.hasErrors()){
             // 에러 발생 시 article을 model로 다시 실어보낸다
             model.addAttribute("article", article);
+            model = articleService.addDetailPageHaterLikerIdList(model, article);
             return "article/article_detail";
         }
         Comment comment = commentService.create(article, commentForm, memberService.getMember(principal.getName()));
@@ -50,6 +51,7 @@ public class CommentController {
         }
         if (brs.hasErrors()){
             // 에러 발생 시 article을 model로 다시 실어보낸다
+            model = articleService.addDetailPageHaterLikerIdList(model, comment.getArticle());
             model.addAttribute("article", comment.getArticle());
             // todo : 해당 부분 오류 해결(추천 / 비추천 model attribute 추가 후 발생)
             return "article/article_detail";
