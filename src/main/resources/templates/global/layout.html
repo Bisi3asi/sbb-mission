@@ -38,6 +38,12 @@
            href="/member/signin"
            class="btn btn-ghost text-2xl">로그인 해주세요!</a>
     </div>
+    <div>
+        <div sec:authorize="isAuthenticated()"
+              th:text="|환영합니다. ${member.username}님|"
+              class="text">
+        </div>
+    </div>
     <div class="dropdown dropdown-end flex-none">
         <button class="btn btn-square btn-ghost bg-white">
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
