@@ -3,6 +3,13 @@ package com.mysite.sbbmission.article;
 import com.mysite.sbbmission.comment.Comment;
 import com.mysite.sbbmission.global.exceptions.DataNotFoundException;
 import com.mysite.sbbmission.member.Member;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,13 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,7 +46,6 @@ public class ArticleService {
         Article article = Article.builder()
                 .title(articleForm.getTitle().trim())
                 .content(articleForm.getContent().trim())
-                .createDateTime(LocalDateTime.now())
                 .author(author)
                 .build();
         articleRepository.save(article);
@@ -57,9 +56,7 @@ public class ArticleService {
         article = article.toBuilder()
                 .title(articleForm.getTitle())
                 .content(articleForm.getContent())
-                .modifiedDateTime(LocalDateTime.now())
                 .build();
-        articleRepository.save(article);
     }
 
     @Transactional
@@ -70,25 +67,21 @@ public class ArticleService {
     @Transactional
     public void addLike(Article article, Member member) {
         article.getLiker().add(member);
-        articleRepository.save(article);
     }
 
     @Transactional
     public void removeLike(Article article, Member member) {
         article.getLiker().remove(member);
-        articleRepository.save(article);
     }
 
     @Transactional
     public void addHate(Article article, Member member) {
         article.getHater().add(member);
-        articleRepository.save(article);
     }
 
     @Transactional
     public void removeHate(Article article, Member member) {
         article.getHater().remove(member);
-        articleRepository.save(article);
     }
 
     // 게시글을 추천한 사용자 id 리스트를 리턴

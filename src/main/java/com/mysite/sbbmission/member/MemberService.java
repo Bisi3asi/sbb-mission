@@ -1,14 +1,12 @@
 package com.mysite.sbbmission.member;
 
 import com.mysite.sbbmission.global.exceptions.DataNotFoundException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +34,6 @@ public class MemberService {
                 .username(memberSignUpForm.getUsername())
                 .email(memberSignUpForm.getEmail())
                 .password(passwordEncoder.encode(memberSignUpForm.getPassword1()))
-                .createDateTime(LocalDateTime.now())
                 .build();
 
         memberRepository.save(member);

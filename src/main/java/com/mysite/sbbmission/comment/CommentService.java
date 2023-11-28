@@ -3,12 +3,10 @@ package com.mysite.sbbmission.comment;
 import com.mysite.sbbmission.article.Article;
 import com.mysite.sbbmission.global.exceptions.DataNotFoundException;
 import com.mysite.sbbmission.member.Member;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +18,6 @@ public class CommentService {
     public Comment create(Article article, CommentForm commentForm, Member author) {
         Comment comment = Comment.builder()
                 .content(commentForm.getContent().trim())
-                .createDateTime(LocalDateTime.now())
                 .article(article)
                 .author(author)
                 .build();
@@ -40,9 +37,7 @@ public class CommentService {
     public void update(Comment comment, CommentForm commentForm){
         comment = comment.toBuilder()
                 .content(commentForm.getContent())
-                .modifiedDateTime(LocalDateTime.now())
                 .build();
-        commentRepository.save(comment);
     }
 
     @Transactional
@@ -53,25 +48,21 @@ public class CommentService {
     @Transactional
     public void addLike(Comment comment, Member member) {
         comment.getLiker().add(member);
-        commentRepository.save(comment);
     }
 
     @Transactional
     public void removeLike(Comment comment, Member member) {
         comment.getLiker().remove(member);
-        commentRepository.save(comment);
     }
 
     @Transactional
     public void addHate(Comment comment, Member member) {
         comment.getHater().add(member);
-        commentRepository.save(comment);
     }
 
     @Transactional
     public void removeHate(Comment comment, Member member) {
         comment.getHater().remove(member);
-        commentRepository.save(comment);
     }
 
 }
