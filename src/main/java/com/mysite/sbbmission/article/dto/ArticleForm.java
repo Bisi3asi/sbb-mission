@@ -1,4 +1,4 @@
-package com.mysite.sbbmission.article;
+package com.mysite.sbbmission.article.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

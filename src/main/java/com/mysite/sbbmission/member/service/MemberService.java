@@ -1,12 +1,17 @@
-package com.mysite.sbbmission.member;
+package com.mysite.sbbmission.member.service;
 
 import com.mysite.sbbmission.global.exceptions.DataNotFoundException;
-import java.util.Optional;
+import com.mysite.sbbmission.member.model.entity.Member;
+import com.mysite.sbbmission.member.repository.MemberRepository;
+import com.mysite.sbbmission.member.dto.MemberSignUpForm;
+import com.mysite.sbbmission.member.model.MemberUtilConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

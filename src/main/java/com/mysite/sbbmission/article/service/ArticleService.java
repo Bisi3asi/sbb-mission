@@ -1,8 +1,11 @@
-package com.mysite.sbbmission.article;
+package com.mysite.sbbmission.article.service;
 
-import com.mysite.sbbmission.comment.Comment;
+import com.mysite.sbbmission.article.dto.ArticleForm;
+import com.mysite.sbbmission.article.repository.ArticleRepository;
+import com.mysite.sbbmission.article.entity.Article;
+import com.mysite.sbbmission.comment.entity.Comment;
 import com.mysite.sbbmission.global.exceptions.DataNotFoundException;
-import com.mysite.sbbmission.member.Member;
+import com.mysite.sbbmission.member.model.entity.Member;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

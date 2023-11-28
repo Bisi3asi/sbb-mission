@@ -1,4 +1,4 @@
-package com.mysite.sbbmission.comment;
+package com.mysite.sbbmission.comment.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

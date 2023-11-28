@@ -1,5 +1,8 @@
-package com.mysite.sbbmission.member;
+package com.mysite.sbbmission.member.service;
 
+import com.mysite.sbbmission.member.model.entity.Member;
+import com.mysite.sbbmission.member.model.MemberRole;
+import com.mysite.sbbmission.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

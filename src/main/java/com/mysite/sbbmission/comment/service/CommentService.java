@@ -1,8 +1,11 @@
-package com.mysite.sbbmission.comment;
+package com.mysite.sbbmission.comment.service;
 
-import com.mysite.sbbmission.article.Article;
+import com.mysite.sbbmission.article.entity.Article;
+import com.mysite.sbbmission.comment.dto.CommentForm;
+import com.mysite.sbbmission.comment.entity.Comment;
+import com.mysite.sbbmission.comment.repository.CommentRepository;
 import com.mysite.sbbmission.global.exceptions.DataNotFoundException;
-import com.mysite.sbbmission.member.Member;
+import com.mysite.sbbmission.member.model.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

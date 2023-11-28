@@ -1,5 +1,6 @@
-package com.mysite.sbbmission.member;
+package com.mysite.sbbmission.member.model.entity;
 
+import com.mysite.sbbmission.member.model.MemberUtilConst;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

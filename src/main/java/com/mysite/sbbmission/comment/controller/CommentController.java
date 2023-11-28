@@ -1,9 +1,12 @@
-package com.mysite.sbbmission.comment;
+package com.mysite.sbbmission.comment.controller;
 
-import com.mysite.sbbmission.article.Article;
-import com.mysite.sbbmission.article.ArticleService;
-import com.mysite.sbbmission.member.Member;
-import com.mysite.sbbmission.member.MemberService;
+import com.mysite.sbbmission.article.entity.Article;
+import com.mysite.sbbmission.article.service.ArticleService;
+import com.mysite.sbbmission.comment.entity.Comment;
+import com.mysite.sbbmission.comment.dto.CommentForm;
+import com.mysite.sbbmission.comment.service.CommentService;
+import com.mysite.sbbmission.member.model.entity.Member;
+import com.mysite.sbbmission.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,17 +1,15 @@
-package com.mysite.sbbmission.article;
+package com.mysite.sbbmission.comment.entity;
 
-import com.mysite.sbbmission.comment.Comment;
-import com.mysite.sbbmission.member.Member;
+import com.mysite.sbbmission.article.entity.Article;
+import com.mysite.sbbmission.member.model.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Getter
@@ -19,15 +17,12 @@ import java.util.Set;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class Article {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(columnDefinition = "VARCHAR(50)", length = 50)
-    private String title;
-
-    @Column(columnDefinition = "TEXT", length = 500)
+    @Column(columnDefinition = "TEXT", length = 300)
     private String content;
 
     @CreatedDate
@@ -36,9 +31,8 @@ public class Article {
     @LastModifiedDate
     private LocalDateTime modifiedDateTime;
 
-    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<Comment> commentList = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY) // default 값인 EAGER를 사용하지만
+    private Article article;
 
     @ManyToOne
     private Member author;

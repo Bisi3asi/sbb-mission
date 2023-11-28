@@ -1,4 +1,4 @@
-package com.mysite.sbbmission.member;
+package com.mysite.sbbmission.member.model;
 
 import lombok.Getter;
 

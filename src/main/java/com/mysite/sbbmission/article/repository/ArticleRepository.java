@@ -1,5 +1,6 @@
-package com.mysite.sbbmission.article;
+package com.mysite.sbbmission.article.repository;
 
+import com.mysite.sbbmission.article.entity.Article;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

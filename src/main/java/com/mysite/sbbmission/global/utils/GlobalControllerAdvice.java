@@ -1,7 +1,7 @@
 package com.mysite.sbbmission.global.utils;
 
-import com.mysite.sbbmission.member.Member;
-import com.mysite.sbbmission.member.MemberService;
+import com.mysite.sbbmission.member.model.entity.Member;
+import com.mysite.sbbmission.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
