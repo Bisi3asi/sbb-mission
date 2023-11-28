@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -40,12 +41,14 @@ public class Article {
     @Builder.Default
     private List<Comment> commentList = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member author;
 
     @ManyToMany
-    Set<Member> liker;
+    @Builder.Default
+    Set<Member> liker = new HashSet<>();
 
     @ManyToMany
-    Set<Member> hater;
+    @Builder.Default
+    Set<Member> hater = new HashSet<>();
 }
