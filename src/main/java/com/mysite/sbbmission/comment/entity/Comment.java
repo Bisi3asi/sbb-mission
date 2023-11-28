@@ -6,10 +6,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Getter
@@ -31,15 +32,17 @@ public class Comment {
     @LastModifiedDate
     private LocalDateTime modifiedDateTime;
 
-    @ManyToOne(fetch = FetchType.LAZY) // default 값인 EAGER를 사용하지만
+    @ManyToOne(fetch = FetchType.LAZY)
     private Article article;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member author;
 
     @ManyToMany
-    Set<Member> liker;
+    @Builder.Default
+    Set<Member> liker = new HashSet<>();
 
     @ManyToMany
-    Set<Member> hater;
+    @Builder.Default
+    Set<Member> hater = new HashSet<>();
 }
