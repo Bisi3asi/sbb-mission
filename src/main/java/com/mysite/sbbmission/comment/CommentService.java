@@ -3,10 +3,11 @@ package com.mysite.sbbmission.comment;
 import com.mysite.sbbmission.article.Article;
 import com.mysite.sbbmission.global.exceptions.DataNotFoundException;
 import com.mysite.sbbmission.member.Member;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +39,7 @@ public class CommentService {
         comment = comment.toBuilder()
                 .content(commentForm.getContent())
                 .build();
+        commentRepository.save(comment);
     }
 
     @Transactional
