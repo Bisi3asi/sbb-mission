@@ -24,10 +24,12 @@ public class ArticleController {
     private final MemberService memberService;
 
     @GetMapping("/list")
-    public String showList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
-        Page<Article> paging = articleService.getList(page);
+    public String showList(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+                           @RequestParam(value = "kw", defaultValue ="") String kw) {
+        Page<Article> paging = articleService.getList(page, kw);
 
         model.addAttribute("paging", paging);
+        model.addAttribute("kw", kw);
         return "article/article_list";
     }
 
@@ -36,12 +38,8 @@ public class ArticleController {
     public String showDetail(Model model, @PathVariable("id") Long id) {
         Article article = articleService.getArticle(id);
 
-        // 추천, 비추천자 view 전송
-        model.addAttribute("articleLikerIdList", articleService.getArticleLikerIdList(article));
-        model.addAttribute("articleHaterIdList",  articleService.getArticleHaterIdList(article));
-        model.addAttribute("commentLikerIdList", articleService.getCommentLikerIdList(article));
-        model.addAttribute("commentHaterIdList", articleService.getCommentHaterIdList(article));
-
+        // 추천, 비추천자 view 전달
+        model = articleService.addDetailPageHaterLikerIdList(model, article);
         model.addAttribute("article", article);
         model.addAttribute("commentForm", new CommentForm());
         return "article/article_detail";
