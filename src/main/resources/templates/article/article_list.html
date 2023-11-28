@@ -5,7 +5,14 @@
 <body>
 <div layout:fragment="content" class="mx-4">
     <div>
-        <h5 class="my-3 border-b pb-2">게시글 조회</h5>
+        <div class="flex justify-between">
+            <h5 class="my-3 border-b pb-2">게시글 조회</h5>
+            <div class="flex justify-between w-60 mr-1 my-1">
+                <input type="text" placeholder="검색(작성자/게시물/댓글)" id="search_kw"
+                       class="form-control input input-bordered input-sm w-30 md:w-auto"/>
+                <button class="btn btn-sm btn-ghost" type="button" id="btn_search">검색</button>
+            </div>
+        </div>
         <table class="table overflow-x-auto mb-5">
             <thead>
             <tr>
@@ -37,35 +44,58 @@
                 </td>
                 <td th:text="${#temporals.format(article.createDateTime, 'yyyy.MM.dd HH:mm')}"></td>
                 <td><span th:if="${article.author != null}" th:text="${article.author.username}"></span></td>
-                <td><!-- 추천수 --></td>
+                <td th:text="${article.liker.size}-${article.hater.size}"><!-- 추천수 --></td>
             </tr>
             </tbody>
         </table>
     </div>
     <!-- 페이징처리 시작 -->
-    <div class="mx-auto flex justify-center items-center" th:unless="${paging.isEmpty()}">
+    <div class="page-item mx-auto flex justify-center items-center" th:unless="${paging.isEmpty()}">
         <a th:classappend="${!paging.hasPrevious} ? 'disabled'"
-           th:href="@{|?page=${paging.number-1}|}"
-           class="join-item btn hover:text-blue-500"
+           href="javascript:void(0)"
+           th:data-page="${paging.number-1}"
+           class="page-link join-item btn hover:text-blue-500"
            th:text="이전">
         </a>
         <a th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
            th:if="${page >= paging.number-2 and page <= paging.number+2}"
            th:classappend="${page == paging.number} ? 'active'"
-           th:text="${page+1}"
-           th:href="@{|?page=${page}|}"
-           class="join-item btn hover:text-blue-500">
+           th:text="${page}"
+           href="javascript:void(0)"
+           th:data-page="${page}"
+           class="page-link join-item btn hover:text-blue-500">
         </a>
         <a th:classappend="${!paging.hasNext} ? 'disabled'"
-           th:href="@{|?page=${paging.number+1}|}"
-           class="join-item btn hover:text-blue-500"
+           href="javascript:void(0)"
+           th:data-page="${paging.number+1}"
+           class="page-link join-item btn hover:text-blue-500"
            th:text="다음">
         </a>
     </div>
     <!-- 페이징처리 끝 -->
+    <form th:action="@{/article/list}" method="get" id="searchForm">
+        <input type="hidden" id="kw" name="kw" th:value="${kw}">
+        <input type="hidden" id="page" name="page" th:value="${paging.number}">
+    </form>
+
     <div>
         <a th:href="@{/article/write}" class="btn btn-primary my-2">게시글 작성</a>
     </div>
 </div>
+<script layout:fragment="script" type='text/javascript'>
+    const page_elements = document.getElementsByClassName("page-link");
+    Array.from(page_elements).forEach(function(element) {
+        element.addEventListener('click', function() {
+            document.getElementById('page').value = this.dataset.page;
+            document.getElementById('searchForm').submit();
+        });
+    });
+    const btn_search = document.getElementById("btn_search");
+    btn_search.addEventListener('click', function() {
+        document.getElementById('kw').value = document.getElementById('search_kw').value;
+        document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
+        document.getElementById('searchForm').submit();
+    });
+</script>
 </body>
 </html>
