@@ -1,18 +1,16 @@
 package com.mysite.sbbmission.article.service;
 
 import com.mysite.sbbmission.article.dto.ArticleForm;
-import com.mysite.sbbmission.article.repository.ArticleRepository;
 import com.mysite.sbbmission.article.entity.Article;
+import com.mysite.sbbmission.article.repository.ArticleRepository;
 import com.mysite.sbbmission.comment.entity.Comment;
 import com.mysite.sbbmission.global.exceptions.DataNotFoundException;
 import com.mysite.sbbmission.member.model.entity.Member;
-import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -29,13 +27,12 @@ import java.util.stream.Collectors;
 public class ArticleService {
     private final ArticleRepository articleRepository;
 
-    public Page<Article> getList(int page, String kw) {
+    public Page<Article> getList(int page, String kw, List<String> kwTypes) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("id"));
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
 
-        Specification<Article> spec = search(kw);
-        return this.articleRepository.findAll(spec, pageable);
+        return search(kwTypes, kw, pageable);
     }
 
     public Article getArticle(Long id) {
@@ -64,7 +61,7 @@ public class ArticleService {
                 .title(articleForm.getTitle())
                 .content(articleForm.getContent())
                 .build();
-        // 영속성 컨텍스트는, JPA findbyId 등 해당 메소드로 불러왔을 때만 사용 가능
+        // 영속성 컨텍스트는, JPA findById 등 해당 메소드로 불러왔을 때만 사용 가능
         articleRepository.save(article);
     }
 
@@ -116,6 +113,7 @@ public class ArticleService {
                                 .collect(Collectors.toList())
                 ));
     }
+
     public Map<Long, List<String>> getCommentHaterIdList(Article article) {
         return article.getCommentList().stream()
                 .collect(Collectors.toMap(
@@ -126,7 +124,7 @@ public class ArticleService {
                 ));
     }
 
-    public Model addDetailPageHaterLikerIdList(Model model, Article article){
+    public Model addDetailPageHaterLikerIdList(Model model, Article article) {
         model.addAttribute("articleLikerIdList", getArticleLikerIdList(article));
         model.addAttribute("articleHaterIdList", getArticleHaterIdList(article));
         model.addAttribute("commentLikerIdList", getCommentLikerIdList(article));
@@ -135,21 +133,7 @@ public class ArticleService {
     }
 
     // 제목, 내용, 질문, 게시글 작성자, 답변 작성자
-    private Specification<Article> search(String kw) {
-        return new Specification<>() {
-            private static final long serialVersionUID = 1L;
-            @Override
-            public Predicate toPredicate(Root<Article> q, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                query.distinct(true);  // 중복을 제거
-                Join<Article, Member> u1 = q.join("author", JoinType.LEFT);
-                Join<Article, Comment> a = q.join("commentList", JoinType.LEFT);
-                Join<Comment, Member> u2 = a.join("author", JoinType.LEFT);
-                return cb.or(cb.like(q.get("title"), "%" + kw + "%"), // 제목
-                        cb.like(q.get("content"), "%" + kw + "%"),      // 내용
-                        cb.like(u1.get("username"), "%" + kw + "%"),    // 질문 작성자
-                        cb.like(a.get("content"), "%" + kw + "%"),      // 답변 내용
-                        cb.like(u2.get("username"), "%" + kw + "%"));   // 답변 작성자
-            }
-        };
+    public Page<Article> search(List<String> kwTypes, String kw, Pageable pageable) {
+        return articleRepository.search(kwTypes, kw, pageable);
     }
 }

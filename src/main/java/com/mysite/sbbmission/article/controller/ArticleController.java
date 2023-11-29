@@ -1,8 +1,8 @@
 package com.mysite.sbbmission.article.controller;
 
 import com.mysite.sbbmission.article.dto.ArticleForm;
-import com.mysite.sbbmission.article.service.ArticleService;
 import com.mysite.sbbmission.article.entity.Article;
+import com.mysite.sbbmission.article.service.ArticleService;
 import com.mysite.sbbmission.comment.dto.CommentForm;
 import com.mysite.sbbmission.global.exceptions.DataNotFoundException;
 import com.mysite.sbbmission.member.model.entity.Member;
@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,18 +31,29 @@ public class ArticleController {
     private final MemberService memberService;
 
     @GetMapping("/list")
-    public String showList(Model model, @RequestParam(defaultValue = "0") int page,
-                           @RequestParam(defaultValue ="") String kw) {
-        if (page < 0){
-            throw new DataNotFoundException("잘못된 페이지 접근입니다.");
+    public String showList(Model model,
+                           @RequestParam(defaultValue = "0") int page,
+                           @RequestParam(defaultValue = "") String kw,
+                           @RequestParam(value="kwType", defaultValue = "") List<String> kwTypes) {
+        if (page < 0) {
+            throw new DataNotFoundException("존재하지 않는 페이지입니다.");
         }
-        Page<Article> paging = articleService.getList(page, kw);
 
-        if (page > paging.getTotalPages()-1){
-            throw new DataNotFoundException("잘못된 페이지 접근입니다.");
+        Map<String, Boolean> kwTypesMap = kwTypes
+                .stream()
+                .collect(Collectors.toMap(
+                        kwType -> kwType,
+                        kwType -> true
+                ));
+
+        Page<Article> paging = articleService.getList(page, kw, kwTypes);
+
+        if (page > paging.getTotalPages() - 1) {
+            throw new DataNotFoundException("검색 결과가 존재하지 않습니다.");
         }
+
+        model.addAttribute("kwTypesMap", kwTypesMap);
         model.addAttribute("paging", paging);
-        model.addAttribute("kw", kw);
         return "article/article_list";
     }
 
@@ -92,7 +106,7 @@ public class ArticleController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{id}")
     public String modify(@ModelAttribute("articleForm") @Valid ArticleForm articleForm, BindingResult brs,
-                         @PathVariable("id") Long id,  Principal principal) {
+                         @PathVariable("id") Long id, Principal principal) {
         Article article = articleService.getArticle(id);
         if (!article.getAuthor().getSignInId().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");

@@ -26,17 +26,18 @@ public class init {
     @PostConstruct
     @Transactional
     public void setInitData() {
+
         Member member = Member.builder()
-                .signInId("testuser1")
-                .username("testuser1")
-                .password("12345678")
+                .signInId("sbbadmin")
+                .username("admin")
+                .password(passwordEncoder.encode("12345678"))
                 .build();
         memberRepository.save(member);
 
         member = Member.builder()
-                .signInId("sbbadmin")
-                .username("admin")
-                .password(passwordEncoder.encode("12345678"))
+                .signInId("testuser1")
+                .username("testuser1")
+                .password("12345678")
                 .build();
         memberRepository.save(member);
 

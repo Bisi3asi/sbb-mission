@@ -5,13 +5,8 @@
 <body>
 <div layout:fragment="content" class="mx-4">
     <div>
-        <div class="flex justify-between">
+        <div>
             <h5 class="my-3 border-b pb-2">게시글 조회</h5>
-            <div class="flex justify-between w-60 mr-1 my-1">
-                <input type="text" placeholder="검색(작성자/게시물/댓글)" id="search_kw"
-                       class="form-control input input-bordered input-sm w-30 md:w-auto"/>
-                <button class="btn btn-sm btn-ghost" type="button" id="btn_search">검색</button>
-            </div>
         </div>
         <table class="table overflow-x-auto mb-5">
             <thead>
@@ -49,17 +44,48 @@
             </tbody>
         </table>
     </div>
+    <form>
+        <div class="page-item mx-auto justify-center items-center">
+            <div class="flex justify-center w-auto mr-1 my-1">
+                <label class="label cursor-pointer">
+                    <span class="label-text-alt mr-1">글 제목</span>
+                    <input type="checkbox" name="kwType" value="article_title"
+                           th:checked="${kwTypesMap['article_title']}"
+                           class="checkbox checkbox-sm mr-2"/>
+                    <span class="label-text-alt mr-1">글 내용</span>
+                    <input type="checkbox" name="kwType" value="article_content"
+                           th:checked="${kwTypesMap['article_content']}"
+                           class="checkbox checkbox-sm mr-2"/>
+                    <span class="label-text-alt mr-1">댓글</span>
+                    <input type="checkbox" name="kwType" value="comment_content"
+                           th:checked="${kwTypesMap['comment_content']}"
+                           class="checkbox checkbox-sm mr-2"/>
+                    <span class="label-text-alt mr-1">글 작성자</span>
+                    <input type="checkbox" name="kwType" value="article_username"
+                           th:checked="${kwTypesMap['article_username']}"
+                           class="checkbox checkbox-sm mr-2"/>
+                    <span class="label-text-alt mr-1">댓글 작성자</span>
+                    <input type="checkbox" name="kwType" value="comment_username"
+                           th:checked="${kwTypesMap['comment_username']}"
+                           class="checkbox checkbox-sm mr-2"/>
+                </label>
+                <label class="flex">
+                    <input type="search" placeholder="검색어를 입력해주세요" id="search_kw" name="kw" th:value="${param.kw}"
+                           class="form-control flex items-center input input-bordered input-md w-30"/>
+                    <input type="submit" class="btn btn-md btn-ghost" id="btn_search" value="검색"></input>
+                </label>
+            </div>
+        </div>
+    </form>
     <!-- 페이징처리 시작 -->
-    <div class="page-item mx-auto flex justify-center items-center" th:unless="${paging.isEmpty()}">
+    <div class="flex justify-center mt-2" th:unless="${paging.isEmpty()}">
         <a th:classappend="${!paging.hasPrevious} ? 'opacity-50 pointer-events-none' : ''"
-           href="javascript:void(0)"
-           th:data-page="0"
+           th:href="|?page=0|"
            class="page-link join-item btn hover:text-blue-500"
            th:text="처음">
         </a>
         <a th:classappend="${!paging.hasPrevious} ? 'opacity-50 pointer-events-none' : ''"
-           href="javascript:void(0)"
-           th:data-page="${paging.number-1}"
+           th:href="|?page=${paging.number-1}|"
            class="page-link join-item btn hover:text-blue-500"
            th:text="이전">
         </a>
@@ -67,47 +93,27 @@
            th:if="${page >= paging.number-2 and page <= paging.number+2}"
            th:classappend="${page == paging.number} ? 'opacity-50 pointer-events-none' : ''"
            th:text="${page}"
-           href="javascript:void(0)"
-           th:data-page="${page}"
+           th:href="|?page=${page}|"
            class="page-link join-item btn hover:text-blue-500">
         </a>
         <a th:classappend="${!paging.hasNext} ? 'opacity-50 pointer-events-none' : ''"
-           href="javascript:void(0)"
-           th:data-page="${paging.number+1}"
+           th:href="|?page=${paging.number+1}|"
            class="page-link join-item btn hover:text-blue-500"
            th:text="다음">
         </a>
         <a th:classappend="${!paging.hasNext} ? 'opacity-50 pointer-events-none' : ''"
-           href="javascript:void(0)"
-           th:data-page="${paging.totalPages-1}"
+           th:href="|?page=${paging.totalPages-1}|"
            class="page-link join-item btn hover:text-blue-500"
            th:text="끝">
         </a>
     </div>
     <!-- 페이징처리 끝 -->
-    <form th:action="@{/article/list}" method="get" id="searchForm">
-        <input type="hidden" id="kw" name="kw" th:value="${kw}">
-        <input type="hidden" id="page" name="page" th:value="${paging.number}">
-    </form>
-
     <div>
         <a th:href="@{/article/write}" class="btn btn-primary my-2">게시글 작성</a>
     </div>
 </div>
-<script layout:fragment="script" type='text/javascript'>
-    const page_elements = document.getElementsByClassName("page-link");
-    Array.from(page_elements).forEach(function (element) {
-        element.addEventListener('click', function () {
-            document.getElementById('page').value = this.dataset.page;
-            document.getElementById('searchForm').submit();
-        });
-    });
-    const btn_search = document.getElementById("btn_search");
-    btn_search.addEventListener('click', function () {
-        document.getElementById('kw').value = document.getElementById('search_kw').value;
-        document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
-        document.getElementById('searchForm').submit();
-    });
-</script>
+
+
+
 </body>
 </html>
