@@ -41,12 +41,19 @@ public class init {
                 .build();
         memberRepository.save(member);
 
-        for (int i = 1; i < 30; i++) {
-            Article article = Article.builder()
-                    .title(String.format("테스트 글 %d", i))
-                    .content(String.format("테스트 내용 %d", i))
-                    .author(member)
-                    .build();
+        for (int i = 1; i < 100; i++) {
+            Article article = (i % 2 == 0) ?
+                    Article.builder()
+                            .title(String.format("젠장 또 대상혁이야.. %d", i))
+                            .content(String.format("기 습 숭 배 %d", i))
+                            .author(member)
+                            .build()
+                    :
+                    Article.builder()
+                            .title(String.format("또 숭배할 수 밖에 없어.. %d", i))
+                            .content(String.format("상 습 숭 배 %d", i))
+                            .author(member)
+                            .build();
             articleRepository.save(article);
 
             for (int j = 0; j < 3; j++) {
@@ -59,5 +66,4 @@ public class init {
             }
         }
     }
-
 }
