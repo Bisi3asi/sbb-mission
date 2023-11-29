@@ -4,6 +4,7 @@ import com.mysite.sbbmission.article.dto.ArticleForm;
 import com.mysite.sbbmission.article.service.ArticleService;
 import com.mysite.sbbmission.article.entity.Article;
 import com.mysite.sbbmission.comment.dto.CommentForm;
+import com.mysite.sbbmission.global.exceptions.DataNotFoundException;
 import com.mysite.sbbmission.member.model.entity.Member;
 import com.mysite.sbbmission.member.service.MemberService;
 import jakarta.validation.Valid;
@@ -27,10 +28,16 @@ public class ArticleController {
     private final MemberService memberService;
 
     @GetMapping("/list")
-    public String showList(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
-                           @RequestParam(value = "kw", defaultValue ="") String kw) {
+    public String showList(Model model, @RequestParam(defaultValue = "0") int page,
+                           @RequestParam(defaultValue ="") String kw) {
+        if (page < 0){
+            throw new DataNotFoundException("잘못된 페이지 접근입니다.");
+        }
         Page<Article> paging = articleService.getList(page, kw);
 
+        if (page > paging.getTotalPages()-1){
+            throw new DataNotFoundException("잘못된 페이지 접근입니다.");
+        }
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
         return "article/article_list";
