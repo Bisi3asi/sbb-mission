@@ -61,8 +61,11 @@ public class ArticleService {
                 .title(articleForm.getTitle())
                 .content(articleForm.getContent())
                 .build();
-        // 영속성 컨텍스트는, JPA findById 등 해당 메소드로 불러왔을 때만 사용 가능
+        // 1. articleRepository.save 생략이 불가능한 이유 : 영속성 컨텍스트는, JPA findById 등 해당 메소드로 엔티티를 불러왔을 때만 사용 가능
+        // 2. toBuilder 자체가 새로운 객체를 생성하는 패턴이기 때문에 JPA 영속성 컨텍스트에 포함되지 않음
         articleRepository.save(article);
+        // 1. 그럼에도, save를 함으로써 JPA의 더티체킹이 동작해 id가 동일한 현재 article의 업데이트 내용을 기존 엔티티로 반영한다.
+        // 2. 새로운 엔티티를 추가하거나 삭제하는 행위는 직접 remove, (새로운 id로) save를 해야 한다.
     }
 
     @Transactional
