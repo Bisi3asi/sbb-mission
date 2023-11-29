@@ -9,6 +9,7 @@ import com.mysite.sbbmission.member.repository.MemberRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ public class init {
     private final ArticleRepository articleRepository;
     private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @PostConstruct
     @Transactional
@@ -28,6 +30,13 @@ public class init {
                 .signInId("testuser1")
                 .username("testuser1")
                 .password("12345678")
+                .build();
+        memberRepository.save(member);
+
+        member = Member.builder()
+                .signInId("sbbadmin")
+                .username("admin")
+                .password(passwordEncoder.encode("12345678"))
                 .build();
         memberRepository.save(member);
 
