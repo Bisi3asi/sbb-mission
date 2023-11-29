@@ -5,9 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Getter
@@ -27,7 +27,7 @@ public class Member {
     @Column(columnDefinition = "VARCHAR(10)", length = MemberUtilConst.USERNAME.MAXLENGTH, unique = true)
     private String username;
 
-    @Column(columnDefinition = "VARCHAR(20)", length = MemberUtilConst.PASSWORD.MAXLENGTH)
+    @Column(columnDefinition = "VARCHAR", length = MemberUtilConst.PASSWORD.MAXLENGTH)
     private String password;
 
     @Column(columnDefinition = "VARCHAR(40)", length = MemberUtilConst.EMAIL.MAXLENGTH, unique = true)
