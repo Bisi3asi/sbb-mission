@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html lang="ko" layout:decorate="~{global/layout}">
-
+<html lang="ko" data-theme="dark">
 <head>
-    <title>존재하지 않는 페이지입니다.</title>
+    <meta charset="UTF-8">
+    <title>OOPS!</title>
+    <!-- import global.css-->
+    <link rel="stylesheet" href="/resource/global.css">
 </head>
 <body>
-<div layout:fragment="content" class="mx-4 h-screen flex flex-col justify-center items-center">
+<!-- import daisyUI -->
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.0.8/dist/full.min.css" rel="stylesheet" type="text/css"/>
+<!-- import tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="mx-4 h-screen flex flex-col justify-center items-center">
     <div class="my-4">
         <h1 class="text-5xl font-bold text-center">OOPS!</h1>
     </div>
