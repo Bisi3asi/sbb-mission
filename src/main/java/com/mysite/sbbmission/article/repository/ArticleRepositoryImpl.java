@@ -21,7 +21,8 @@ import static com.mysite.sbbmission.comment.entity.QComment.comment;
 @RequiredArgsConstructor
 public class ArticleRepositoryImpl implements ArticleRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
-
+    // countdistinct
+    //
     @Override
     public Page<Article> search(List<String> kwTypes, String kw, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
