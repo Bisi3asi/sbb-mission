@@ -47,11 +47,6 @@ public class ArticleController {
                 ));
 
         Page<Article> paging = articleService.getList(page, kw, kwTypes);
-        System.out.println("Total Elements: " + paging.getTotalElements());
-        System.out.println("Total Pages: " + paging.getTotalPages());
-        System.out.println("Number: " + paging.getNumber());
-        System.out.println("Size: " + paging.getSize());
-        System.out.println("Content: " + paging.getContent());
 
         if (page > paging.getTotalPages() - 1) {
             throw new DataNotFoundException("검색 결과가 존재하지 않습니다.");

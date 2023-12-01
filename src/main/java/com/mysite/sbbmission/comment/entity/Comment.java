@@ -21,7 +21,7 @@ import java.util.Set;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(columnDefinition = "TEXT", length = 300)
     private String content;

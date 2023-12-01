@@ -23,7 +23,7 @@ import java.util.Set;
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(columnDefinition = "VARCHAR(50)", length = 50)
     private String title;
@@ -36,6 +36,14 @@ public class Article {
 
     @LastModifiedDate
     private LocalDateTime modifiedDateTime;
+
+    @Column(columnDefinition = "int default 0", nullable = false)
+    @Builder.Default
+    private int viewCount = 0;
+
+    public void incrViewCount(){
+        viewCount++;
+    }
 
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default

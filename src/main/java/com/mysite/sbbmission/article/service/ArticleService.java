@@ -35,11 +35,14 @@ public class ArticleService {
         return search(kwTypes, kw, pageable);
     }
 
+    @Transactional
     public Article getArticle(Long id) {
-        Optional<Article> article = this.articleRepository.findById(id);
+        Optional<Article> opArticle = this.articleRepository.findById(id);
 
-        if (article.isPresent()) {
-            return article.get();
+        if (opArticle.isPresent()) {
+            Article article = opArticle.get();
+            article.incrViewCount();
+            return article;
         } else {
             throw new DataNotFoundException("존재하지 않는 게시물입니다.");
         }
